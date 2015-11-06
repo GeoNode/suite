@@ -1,0 +1,16 @@
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    {% if project != "OpenGeo Suite" %}
+      <li><a href="{{ theme_documentation_root }}"> Suite </a> &raquo;</li>
+      <li><a href="{{ pathto(master_doc) }}"> {{ shorttitle }} </a> &raquo;</li>
+    {% else %}
+      <li><a href="{{ pathto(master_doc) }}">Suite </a> &raquo;</li>
+    {% endif %}
+
+    {% for doc in parents %}
+        <li><a href="{{ doc.link|e }}">{{ doc.title }}</a> &raquo;</li>
+    {% endfor %}
+    <li>{{ title }}</li>
+  </ul>
+  <hr/>
+</div>

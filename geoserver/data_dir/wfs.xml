@@ -4,7 +4,7 @@
   <name>WFS</name>
   <title>GeoServer Web Feature Service</title>
   <maintainer>http://boundlessgeo.com/about/contact-us/customer-support/</maintainer>
-  <abstrct>This is the reference implementation of WFS 1.0.0 and WFS 1.1.0, supports all WFS operations including Transaction.</abstrct>
+  <abstrct>Web Feature Service implementation for vector data supporting WFS 1.0.0, WFS 1.1.0 and WFS 2.0.0. All layers published by this service are available via WMS.</abstrct>
   <accessConstraints>NONE</accessConstraints>
   <fees>NONE</fees>
   <versions>
@@ -41,7 +41,7 @@
       </org.geoserver.wfs.GMLInfoImpl>
     </entry>
   </gml>
-  <serviceLevel>COMPLETE</serviceLevel>
+  <serviceLevel>BASIC</serviceLevel>
   <maxFeatures>1000000</maxFeatures>
   <featureBounding>false</featureBounding>
   <canonicalSchemaLocation>false</canonicalSchemaLocation>

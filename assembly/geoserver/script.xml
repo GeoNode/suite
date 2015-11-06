@@ -8,13 +8,10 @@
       <directory>assembly/target/dependency</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>script-core*</include>
-        <include>script-py*</include>
+        <include>gs-script-core*</include>
+        <include>gs-script-py*</include>
         <include>geoscript-py*</include>
         <include>jython*</include>
-        <include>script-js*</include>
-        <include>geoscript-js*</include>
-        <include>rhino*</include>
         <include>jline*</include>
       </includes>
     </fileSet>

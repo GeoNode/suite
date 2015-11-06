@@ -10,3 +10,4 @@ This section will discuss best practices for security with OpenGeo Suite.
 
    masterpwd
    multiuser/index
+   wps

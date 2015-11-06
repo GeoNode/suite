@@ -6,6 +6,8 @@ Loading data into PostGIS with pgShapeloader
 
 The ``pgShapeloader`` tool (also known as "PostGIS Shapefile Import/Export Manager" or "PostGIS Shapefile and DBF loader") provides another option for loading shapefiles into PostGIS database tables. It is the graphical user interface (GUI) equivalent of the command line :ref:`shp2pgsql <dataadmin.pgGettingStarted.shp2pgsql>` tool.
 
+.. note:: This section uses the command line utility ``shp2pgsql``, the graphical utility ``pgShapeloader`` and optionally the graphical utility ``pgAdmin``. These tools may not be automatically present, depending on the type of installation of OpenGeo Suite. Please see the :ref:`intro.installation` section for information on how to install these tools for your platform.
+
 .. note::  On Linux systems, pgShapeloader is known as ``shp2pgsql-gui``.
 
 
@@ -27,7 +29,7 @@ Preparation
 Launching pgShapeloader
 -----------------------
 
-Depending on how OpenGeo Suite was installed pgShapeloader may or may not have been installed. See the :ref:`installation` section for installation instructions. Once installed follow the instructions below for your platform. 
+Depending on how OpenGeo Suite was installed pgShapeloader may or may not have been installed. See the :ref:`intro.installation` section for installation instructions. Once installed follow the instructions below for your platform. 
 
 Windows
 ^^^^^^^
@@ -79,13 +81,13 @@ Loading data
 
    .. figure:: img/pgshp_connectionsuccess.png
 
-      *A successful PostGIS connection*
+      A successful PostGIS connection
 
 #. To select your source files, click :guilabel:`Add File` to open the :guilabel:`Select a Shape File` dialog box. Navigate to the location of your shapefile, click the shapefile you wish to load, and click :guilabel:`Open`. Multiple files can also be added in the same way.
 
    .. figure:: img/pgshp_select.png
 
-      *Selecting a shapefile to import*
+      Selecting a shapefile to import
 
 #. Edit the configuration information for each item in the :guilabel:`Import List` to provide **the correct SRID** for each shapefile. 
 
@@ -93,13 +95,13 @@ Loading data
 
    .. figure:: img/pgshp_srid.png
 
-      *Changing the SRID*
+      Changing the SRID
 
 #. Other import options are available to configure. Click :guilabel:`Options` to open the :guilabel:`Import Options` dialog box. 
 
    .. figure:: img/pgshp_options.png
 
-      *Additional options*
+      Additional options
 
    The import options are:
 
@@ -132,19 +134,19 @@ Loading data
 
    .. figure:: img/pgshp_importing.png
 
-      *Import in progress*
+      Import in progress
 
 #. On successful completion, the shapefile has been imported as a table in your PostGIS database.
 
    .. figure:: img/pgshp_success.png
 
-      *A successful import*
+      A successful import
 
 #.  You can verify this in ``pgAdmin`` by viewing the list of tables in the :guilabel:`Object browser`—your new table should be listed.
 
     .. figure:: img/pgshp_pgadminconfirm.png
 
-      *Confirming import in pgAdmin*
+      Confirming import in pgAdmin
 
     You can also verify a successful import operation at the command line by typing:
 
@@ -153,7 +155,6 @@ Loading data
       psql -U <USERNAME> -d <DATABASE> -c "\d" 
 
     .. note:: The specific command parameters will depend on your local configuration.
-
 
     .. code-block:: console
 

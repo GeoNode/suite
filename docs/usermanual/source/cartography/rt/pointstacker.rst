@@ -1,274 +1,133 @@
 .. _cartography.rt.pointstacker:
 
-
 Point Stacker
 =============
 
-The Point Stacker rendering transformation is a **Vector-to-Vector** transformation which displays a dataset of points with those points that occur close together aggregated into a single point. This produces a more readable map in situations when there are many close points to display. As the stacking is performed dynamically, it can be used to visualize changing data, and does not incur a performance overhead even when applied to very large datasets.
+The Point Stacker rendering transformation is a **Vector-to-Vector** transformation which displays a dataset with features that occur close together aggregated into a single point. This produces a more readable map in situations when there are many points to display. As the stacking is performed dynamically, it can be used to visualize changing data, and does not incur a performance overhead even when applied to very large datasets.
 
-The stacked view is created by configuring a layer with an SLD style which invokes the PointStacker rendering transformation. 
+The stacked view is created by configuring a layer with an style which invokes the PointStacker rendering transformation.
 
 .. figure:: img/pointstacker-volcanoes.png
 
-   *Point Stacker rendering transformation*
+   Point Stacker rendering transformation
 
 Usage
 -----
 
-As with all rendering transformations, the transformation is invoked by adding a ``<Transformation>`` element to a ``<FeatureTypeStyle>`` in an SLD style. The SLD can then be applied to any layer which is backed by a suitable dataset (featuretype).
+As with all rendering transformations, the transformation is invoked by inserting a transform into a style. The style can then be applied to any layer which is backed by a suitable dataset.
 
-The transformation is specified with a ``<ogc:Function name="gs:PointStacker">`` element, with arguments which supply the transformation parameters. The arguments are specified using the special function ``<ogc:Function name='parameter'>``. Each function accepts the following arguments:
-
-* an ``<ogc:Literal>`` giving the name of the parameter
-* one or more literals containing the value(s) of the parameter
+The transformation function is called ``vec:PointStacker``. Note that this is the same as the WPS process, as these functions can be invoked as either a WPS process or a rendering transformation.
 
 The transformation parameters are as follows. The order of parameters is not significant.
 
 .. list-table::
-   :widths: 25 10 65 
-   :header-rows: 1   
+   :header-rows: 1
+   :class: non-responsive
+   :widths: 20 10 70
 
    * - Name
      - Required?
      - Description
    * - ``data``
      - Yes
-     - Input FeatureCollection containing the features to map  
-   * - ``cellSize``     
-     - No   
-     - Size of the cells in which to aggregate points (in pixels)   Default = 1
-   * - ``outputBBOX``     
-     - Yes    
-     - Georeferenced bounding box of the output
-   * - ``outputWidth``     
-     - Yes   
-     - Output image width
-   * - ``outputHeight``     
-     - Yes   
-     - Output image height
+     - Input FeatureCollection containing the features to transform
+   * - ``cellSize``
+     - No
+     - Size of the cells in which to aggregate points (in pixels, default = 1)
+   * - ``outputBBOX``
+     - Yes
+     - Georeferenced bounding box of the output. Not required with YSLD.
+   * - ``outputWidth``
+     - Yes
+     - Output image width. Not required with YSLD.
+   * - ``outputHeight``
+     - Yes
+     - Output image height. Not required with YSLD.
 
-The transformation has required parameters which specify the input data extent and the output image dimensions. The values of these parameters are obtained from environment variables accessed via the function ``<ogc:Function name="env">``. The environment variable values are determined from the WMS request which initiated the rendering process. The parameters and corresponding environment variables are:
-
-* ``outputBBOX``—Uses variable ``wms_bbox`` to obtain the surface extent
-* ``outputWidth``—Uses variable ``wms_width`` to obtain the output raster width
-* ``outputHeight``—Uses variable ``wms_height`` to obtain the output raster height
+.. include:: include/envvars.txt
 
 Input
 -----
 
-The PointStacker rendering transformation can be applied to datasets containing features with **vector** geometry. The geometry may be of any type. Point geometries are used directly, while non-point geometry types are converted to points using the centroid of the geometry. The dataset is supplied in the ``data`` parameter.
+The PointStacker rendering transformation is applied to a dataset containing **vector** features. The features may be of any type, though point geometries are typically expected. If non-point geometries are used, the centroids of the features will be used. The dataset is supplied in the ``data`` parameter.
 
 
-Output 
+Output
 ------
 
-The output of the transformation is a **vector** featuretype containing point features. Each feature has the following attributes:
+The output of the transformation is a **vector** layer containing point features. Each feature has the following attributes:
 
 .. list-table::
-   :widths: 20 15 65 
-   :header-rows: 1   
+   :header-rows: 1
+   :class: non-responsive
+   :widths: 20 20 60
 
    * - Name
      - Type
      - Description
    * - ``geom``
      - Point
-     - Point geometry representing the group of input features  
+     - Point geometry representing the group of features
    * - ``count``
      - Integer
-     - Count of all input features represented by this point  
+     - Count of all input features represented by this point
    * - ``countUnique``
      - Integer
-     - Count of all different input points represented by this point  
+     - Count of all different input points represented by this point
+
+The output can be styled using a point symbolizer.
 
 
-The output can be styled as required using a ``<PointSymbolizer>``. 
+Examples
+--------
 
-Example
--------
+This example shows point stacking applied to a dataset of world volcanoes, displayed with a base map layer of continental topography.
 
-The map image above shows point stacking applied to a dataset of world volcanoes, displayed with a base map layer of continental topography. The stacked points are symbolized using appropriate icons and labels, configured with the following SLD. You can modify the parameters in this SLD to adapt it for your data.
+The source data used in this example is the ``world:volcanoes`` layer (available for download on the :ref:`intro.sampledata` page).
 
-.. code-block:: xml
+Below are two examples showing how to perform this rendering transformation in both :ref:`YSLD <cartography.ysld>` and SLD. You can adapt these examples to your data with minimal effort by adjusting the parameters.
+
+YSLD
+^^^^
+
+The PointStacker output, as seen in the figure at the top of the page, can be produced by the following YSLD:
+
+.. literalinclude:: artifact/pointstacker_example.ysld
+   :language: yaml
    :linenos:
-   
-     <?xml version="1.0" encoding="ISO-8859-1"?>
-     <StyledLayerDescriptor version="1.0.0" 
-      xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" 
-      xmlns="http://www.opengis.net/sld" 
-      xmlns:ogc="http://www.opengis.net/ogc" 
-      xmlns:xlink="http://www.w3.org/1999/xlink" 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-       <NamedLayer>
-         <Name>vol_stacked_point</Name>
-         <UserStyle>
-         <!-- Styles can have names, titles and abstracts -->
-           <Title>Stacked Point</Title>
-           <Abstract>Styles volcanoes using stacked points</Abstract>
-           <FeatureTypeStyle>
-             <Transformation>
-               <ogc:Function name="gs:PointStacker">
-                 <ogc:Function name="parameter">
-                   <ogc:Literal>data</ogc:Literal>
-                 </ogc:Function>
-                 <ogc:Function name="parameter">
-                   <ogc:Literal>cellSize</ogc:Literal>
-                   <ogc:Literal>30</ogc:Literal>
-                 </ogc:Function>
-                 <ogc:Function name="parameter">
-                   <ogc:Literal>outputBBOX</ogc:Literal>
-                   <ogc:Function name="env">
-                  <ogc:Literal>wms_bbox</ogc:Literal>
-                   </ogc:Function>
-                 </ogc:Function>
-                 <ogc:Function name="parameter">
-                   <ogc:Literal>outputWidth</ogc:Literal>
-                   <ogc:Function name="env">
-                  <ogc:Literal>wms_width</ogc:Literal>
-                   </ogc:Function>
-                 </ogc:Function>
-                 <ogc:Function name="parameter">
-                   <ogc:Literal>outputHeight</ogc:Literal>
-                   <ogc:Function name="env">
-                     <ogc:Literal>wms_height</ogc:Literal>
-                   </ogc:Function>
-                 </ogc:Function>
-               </ogc:Function>
-             </Transformation>
-             <Rule>
-               <Name>rule1</Name>
-               <Title>Volcano</Title>
-               <ogc:Filter>
-                 <ogc:PropertyIsLessThanOrEqualTo>
-                   <ogc:PropertyName>count</ogc:PropertyName>
-                  <ogc:Literal>1</ogc:Literal>
-                 </ogc:PropertyIsLessThanOrEqualTo>
-               </ogc:Filter>
-               <PointSymbolizer>
-                 <Graphic>
-                   <Mark>
-                     <WellKnownName>triangle</WellKnownName>
-                     <Fill>
-                       <CssParameter name="fill">#FF0000</CssParameter>
-                     </Fill>
-                   </Mark>
-                   <Size>8</Size>
-                 </Graphic>
-               </PointSymbolizer>
-             </Rule>
-             <Rule>
-               <Name>rule29</Name>
-               <Title>2-9 Volcanoes</Title>
-               <ogc:Filter>
-                 <ogc:PropertyIsBetween>
-                   <ogc:PropertyName>count</ogc:PropertyName>
-                   <ogc:LowerBoundary>
-                     <ogc:Literal>2</ogc:Literal>
-                   </ogc:LowerBoundary>
-                   <ogc:UpperBoundary>
-                     <ogc:Literal>9</ogc:Literal>
-                   </ogc:UpperBoundary>
-                 </ogc:PropertyIsBetween>
-               </ogc:Filter>
-               <PointSymbolizer>
-                 <Graphic>
-                   <Mark>
-                     <WellKnownName>circle</WellKnownName>
-                     <Fill>
-                       <CssParameter name="fill">#AA0000</CssParameter>
-                     </Fill>
-                   </Mark>
-                   <Size>14</Size>
-                 </Graphic>
-               </PointSymbolizer>
-               <TextSymbolizer>
-                 <Label>
-                   <ogc:PropertyName>count</ogc:PropertyName>
-                 </Label>
-                 <Font>
-                   <CssParameter name="font-family">Arial</CssParameter>
-                   <CssParameter name="font-size">12</CssParameter>
-                   <CssParameter name="font-weight">bold</CssParameter>
-                 </Font> 
-                 <LabelPlacement>
-                   <PointPlacement>
-                   <AnchorPoint>
-                     <AnchorPointX>0.5</AnchorPointX>
-                     <AnchorPointY>0.8</AnchorPointY>
-                   </AnchorPoint>
-                   </PointPlacement>
-                 </LabelPlacement>
-                 <Halo>
-                   <Radius>2</Radius>
-                   <Fill> 
-                     <CssParameter name="fill">#AA0000</CssParameter> 
-                     <CssParameter name="fill-opacity">0.9</CssParameter> 
-                   </Fill> 
-                 </Halo>
-                 <Fill>
-                   <CssParameter name="fill">#FFFFFF</CssParameter>
-                   <CssParameter name="fill-opacity">1.0</CssParameter>
-                 </Fill>
-               </TextSymbolizer>
-             </Rule>
-             <Rule>
-               <Name>rule10</Name>
-               <Title>> 10 Volcanoes</Title>
-               <ogc:Filter>
-                 <ogc:PropertyIsGreaterThan>
-                   <ogc:PropertyName>count</ogc:PropertyName>
-                   <ogc:Literal>9</ogc:Literal>
-                 </ogc:PropertyIsGreaterThan>
-               </ogc:Filter>
-               <PointSymbolizer>
-                 <Graphic>
-                   <Mark>
-                     <WellKnownName>circle</WellKnownName>
-                     <Fill>
-                       <CssParameter name="fill">#AA0000</CssParameter>
-                     </Fill>
-                   </Mark>
-                   <Size>22</Size>
-                 </Graphic>
-               </PointSymbolizer>
-               <TextSymbolizer>
-                 <Label>
-                   <ogc:PropertyName>count</ogc:PropertyName>
-                 </Label>
-                 <Font>
-                   <CssParameter name="font-family">Arial</CssParameter>
-                   <CssParameter name="font-size">12</CssParameter>
-                   <CssParameter name="font-weight">bold</CssParameter>
-                 </Font> 
-                 <LabelPlacement>
-                   <PointPlacement>
-                     <AnchorPoint>
-                       <AnchorPointX>0.5</AnchorPointX>
-                       <AnchorPointY>0.8</AnchorPointY>
-                     </AnchorPoint>
-                   </PointPlacement>
-                 </LabelPlacement>
-                 <Halo>
-                    <Radius>2</Radius>
-                    <Fill> 
-                      <CssParameter name="fill">#AA0000</CssParameter> 
-                      <CssParameter name="fill-opacity">0.9</CssParameter> 
-                    </Fill> 
-                 </Halo>
-                 <Fill>
-                   <CssParameter name="fill">#FFFFFF</CssParameter>
-                   <CssParameter name="fill-opacity">1.0</CssParameter>
-                 </Fill>
-               </TextSymbolizer>
-             </Rule>
-           </FeatureTypeStyle>
-         </UserStyle>
-       </NamedLayer>
-     </StyledLayerDescriptor>
-     
-In this SLD **lines 15-43** define the Point Stacker rendering transformation,
-providing values for the transformation parameters which are appropriate for the input dataset. **Line 18** specifies the input dataset parameter name. **Line 22** specifies a cell size of 30 to aggregate the points by. **Lines 24-42** define the output parameters, which are obtained from internal environment variables set during rendering, as described above.
+   :emphasize-lines: 9,11,21,44
 
-**Lines 44-169** define styling rules which are applied to the transformation 
-output to produce the rendered layer. **Lines 44-64** define a rule for depicting a single (unstacked) point using a red triangle symbol. **Lines 65-119** define a rule for depicting a stacked point which has a count in the range 2 to 9. The points are styled as dark red circles of size 14 pixels, with a label showing the count inside them. **Lines 120-169**  define a rule for depicting a stacked point which has a count of 10 or greater. The points are styled as dark red circles of size 22 pixels, with a label that includes the point count.
+This style defines the Point Stacker rendering transformation, providing values for the transformation parameters which are appropriate for the input dataset.
+
+* On **line 9**, **cellSize** specifies a cell size of 30 to aggregate the points by.
+
+Rules are applied to the transformation output to produce the rendered layer.
+
+* Starting at **line 11**, the rule **rule1** depicts a single (unstacked) point using a red triangle symbol.
+* Starting at **line 21**, the rule **rule29** depicts a stacked point which has a count in the range 2 to 9. The points are styled as dark red circles of size 14 pixels, with a label showing the count inside them.
+* Starting at **line 44**, the rule **rule10** depicts a stacked point which has a count of 10 or greater. The points are styled as dark red circles of size 22 pixels, with a label that includes the point count.
+
+.. note:: :download:`Download the YSLD for this example <artifact/pointstacker_example.ysld>`
+
+SLD
+^^^
+
+The PointStacker output can also be produced by the following SLD:
+
+.. literalinclude:: artifact/pointstacker_example.sld
+   :language: xml
+   :linenos:
+   :emphasize-lines: 18,21,25,31,37,45,66,121
+      
+* **Lines 15-43** define the Point Stacker rendering transformation, providing values for the transformation parameters which are appropriate for the input dataset.
+* **Line 18** specifies the input dataset parameter name.
+* **Line 21** specifies a cell size of 30 to aggregate the points by.
+* **Lines 24-42** define the output parameters **outputBBOX**, **outputWith** and **outputHeight**, which are obtained from internal environment variables set during rendering, as described above.
+
+* **Lines 44-169** define styling rules which are applied to the transformation output to produce the rendered layer.
+* **Lines 44-64** define a rule **rule1** for depicting a single (unstacked) point using a red triangle symbol.
+* **Lines 65-119** define a rule **rule29** for depicting a stacked point which has a count in the range 2 to 9. The points are styled as dark red circles of size 14 pixels, with a label showing the count inside them.
+* **Lines 120-169** define a rule **rule10** for depicting a stacked point which has a count of 10 or greater. The points are styled as dark red circles of size 22 pixels, with a label that includes the point count.
+
+.. note:: :download:`Download the SLD for this example <artifact/pointstacker_example.sld>`
 

@@ -1,0 +1,111 @@
+<project name="geoserver.ext" default="build">
+    <import file="../../build/common.xml"/>
+
+    <property name="gs-core.ext.list"
+        value="app-schema,arcsde,control-flow,csw,db2,gdal,inspire,jp2k,libjpeg-turbo,oracle,sqlserver,wps"/>
+    <property name="gs-core.ext.dir"
+        value="../externals/geoserver/src/target/release"/>
+
+    <property name="gs-comm.ext.list" value="geopkg,javascript,jdbcconfig,mbtiles,python,hz-cluster"/>
+    <property name="gs-comm.ext.dir"
+        value="../externals/geoserver/src/community/target/release"/>
+
+    <property name="gs-exts.ext.list" value="cloudwatch,gsr,mongodb"/>
+    <property name="gs-exts.ext.dir" value="../externals/geoserver-exts/target/"/>
+
+    <target name="build" depends="init" description="Build project">
+        <foreach list="${gs-core.ext.list}" target="unpack-core-ext" param="ext"/>
+        <foreach list="${gs-comm.ext.list}" target="unpack-comm-ext" param="ext"/>
+        <foreach list="${gs-exts.ext.list}" target="unpack-ext" param="ext"/>
+        <antcall target="unpack-geomesa-ext"/>
+
+        <antcall target="retrieve"/>
+        <antcall target="unpack-ogr"/>
+        <antcall target="assemble-marlin"/>
+    </target>
+
+    <target name="unpack-ogr">
+        <!-- copy the ogr jars into the gdal ext directory-->
+        <copy todir="target/gdal" flatten="true">
+            <fileset dir="../externals/geotools/modules/plugin/ogr">
+                <include name="**/gt-ogr-core-*.jar"/>
+                <include name="**/gt-ogr-jni-*.jar"/>
+                <exclude name="**/*-sources.jar"/>
+                <exclude name="**/*-tests.jar"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="assemble-marlin">
+        <copy todir="target/marlin" flatten="true">
+            <fileset dir="lib">
+                <include name="marlin-*.jar"/>
+            </fileset>
+            <fileset dir="target">
+              <include name="version.ini"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="clean" depends="destroy" description="Clean project"/>
+
+    <target name="assemble" description="Assemble project">
+        <antcall target="assemble-artifact">
+            <param name="name" value="geoserver-ext"/>
+        </antcall>
+    </target>
+
+    <target name="publish" description="Publish project">
+        <antcall target="publish-artifact">
+            <param name="name" value="geoserver-ext"/>
+        </antcall>
+    </target>
+
+    <target name="unpack-core-ext">
+        <property name="extdir" value="${gs-core.ext.dir}"/>
+        <mkdir dir="target/${ext}"/>
+        <unzip src="${extdir}/geoserver-${gs.version}-${ext}-plugin.zip"
+            dest="target/${ext}">
+            <patternset>
+                <exclude name="*.txt"/>
+                <exclude name="*.TXT"/>
+                <exclude name="*.ini"/>
+                <exclude name="imageio-ext-geocore-*.jar"/>
+                <exclude name="gt-geopkg-12-*.jar"/>
+                <exclude name="sqlite-jdbc-*.jar"/>
+                <exclude name="gt-geojson-*.jar"/>
+                <exclude name="gt-process-??-SNAPSHOT.jar"/>
+                <exclude name="gt-process-feature-*.jar"/>
+                <exclude name="gt-process-raster-*.jar"/>
+                <exclude name="gt-xsd-kml-*.jar"/>
+                <exclude name="json-simple-*.jar"/>
+                <exclude name="imageio-ext-imagereadmt-*.jar"/>
+                <exclude name="gt-process-geometry-*.jar"/>
+            </patternset>
+        </unzip>
+    </target>
+
+    <target name="unpack-comm-ext">
+        <antcall target="unpack-core-ext">
+            <param name="ext" value="${ext}"/>
+            <param name="extdir" value="${gs-comm.ext.dir}"/>
+        </antcall>
+    </target>
+
+    <target name="unpack-ext">
+        <mkdir dir="target/${ext}"/>
+        <unzip src="${gs-exts.ext.dir}/geoserver-exts-${gs.version}-${ext}.zip"
+            dest="target/${ext}"/>
+    </target>
+
+    <target name="unpack-geomesa-ext">
+        <mkdir dir="target/geomesa"/>
+        <unzip dest="target/geomesa" stripAbsolutePathSpec="true">
+            <fileset dir="../externals/geomesa/geoserver-plugin-dist/target">
+                <include name="**/geomesa-geoserver-ext-*.zip"/>
+            </fileset>
+            <mapper type="flatten"/>
+        </unzip>
+    </target>
+
+</project>

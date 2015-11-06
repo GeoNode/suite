@@ -1,0 +1,46 @@
+<project name="geowebcache" default="build">
+
+  <import file="../build/common.xml"/>
+
+  <property name="war.dir" value="target/war"/>
+  <property name="webinf.dir" value="${war.dir}/WEB-INF"/>
+
+  <target name="clean" depends="destroy"
+    description="Clean project"/> 
+
+  <target name="build" depends="init,del_gwc_from_ivy_cache"
+    description="Build project">
+    <antcall target="retrieve">
+      <param name="dir" value="target"/>
+      <param name="type" value="war"/>
+    </antcall>
+    <delete dir="${war.dir}" failonerror="false"/>
+    <unzip src="target/geowebcache-${gwc.version}.war" 
+      dest="${war.dir}"/>
+    <copy todir="${webinf.dir}" overwrite="true">
+      <fileset dir="src/main/webapp/WEB-INF" includes="web.xml"/>
+    </copy>
+    <copy todir="${webinf.dir}/classes">
+      <fileset dir="src/main/resources" includes="*.xml"/>
+    </copy>
+    <jar destfile="${basedir}/target/geowebcache.war" basedir="${war.dir}"
+        includes="**/*" excludes="**/imageio-ext-*.jar"/>
+  </target>
+
+  <target name="assemble" description="Assemble project artifact">
+    <antcall target="assemble-artifact">
+      <param name="dir" value="target"/>
+      <param name="includes" value="geowebcache.war"/>
+    </antcall>
+  </target>
+
+  <target name="publish" description="Publishes project artifact"
+    depends="publish-artifact"/>
+
+  <target name="del_gwc_from_ivy_cache" depends="init" description="Remove cached version of geoswebcache-${gwc.version}.war from ivy's cache">
+     <delete verbose="true">
+	     <fileset dir="${env.HOME}/.ivy2/cache" includes="**/geowebcache-${gwc.version}.war"/>
+     </delete>
+  </target>
+
+</project>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="src/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="src/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="src/ol3/ol.css">
+    <link rel="stylesheet" href="src/css/LayersControl.css">
+    <style>
+      .layers-control {
+        bottom: 21px;
+        top: auto;
+        right: 20px;
+        background-color: #333;
+        color: #fff;
+      }
+      .layers-control-btn {
+        display: inline-block;
+        bottom: 20px;
+        right: 0;
+        position: absolute;
+        border-radius: 0;
+        border: 0;
+        background-color: #333;
+        color: #fff;
+      }
+      .layers-control-btn:hover,
+      .layers-control-btn:focus,
+      .layers-control-btn:active  {
+        outline: 0 !important;
+        background-color: #333;
+        color: #fff;
+        box-shadow: none;
+      }
+      .table tbody tr {
+        height: 1em;
+      }
+      .table tbody tr.highlight td {
+        background-color: yellow;
+      }
+      html, body, #map {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+      body {
+        padding-top: 50px;
+      }
+      .navbar .navbar-brand {
+        font-weight: bold;
+        font-size: 25px;
+        color: white;
+      }
+      #features-container {
+        height: 100%;
+        overflow-y: scroll !important;
+      }
+      #features {
+        height: inherit;
+        overflow-y: scroll !important;
+      }
+      .nopadding {
+         padding: 0 !important;
+         margin: 0 !important;
+      }
+      .drawcursor {
+        cursor: crosshair !important;
+      }
+      #draw-btn.active {
+        color: #00FF00 !important;
+      }
+      @media screen and (max-width: 768px) {
+        .map-container {
+          height: 70%;
+        }
+      }
+    </style>
+    <script src="src/ol3/ol-debug.js"></script>
+    <script src="src/jquery/jquery.js"></script>
+    <script src="src/bootstrap/js/bootstrap.js"></script>
+    <script src="src/bootbox/bootbox.js"></script>
+    <title>Suite OpenLayers 3 Editor</title>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Application Template</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="map.getView().fitExtent(vector.getSource().getExtent(), map.getSize()); return false;"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
+          <li><a href="#" id="draw-btn" class="" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="drawFeature(); return false;"><i class="fa fa-edit"></i>&nbsp;&nbsp;Draw Feature</a></li>
+          <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="deleteFeature(); return false;"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Delete Feature</a></li>
+        </ul>
+      </div><!--/.navbar-collapse -->
+    </div>
+    <div class="container-fluid map-container">
+      <div class="row">
+        <div class="col-sm-8 col-md-8 nopadding">
+          <div id="map"></div>
+        </div>
+        <div class="col-sm-4 col-md-4 ">
+          <div id="features-container">
+            <table id="features" class="table table-hover table-responsive">
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="lib/app.js"></script>
+  </body>
+</html>

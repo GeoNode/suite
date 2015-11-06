@@ -1,0 +1,17 @@
+<ivy-module version="2.0">
+    <info organisation="com.boundlessgeo.suite" module="${ant.project.name}"/>
+
+    <dependencies>
+
+      <dependency org="org.eclipse.jetty" name="jetty-deploy" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-server" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-servlet" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-util" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-xml" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-start" rev="${jetty.version}"/>
+      <dependency org="javax.servlet" name="servlet-api" rev="2.5"/>
+
+      <exclude artifact="slf4j-api"/>
+      <exclude artifact="jetty-jmx"/>
+    </dependencies>
+</ivy-module>

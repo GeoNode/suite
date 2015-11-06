@@ -2,8 +2,8 @@ from geoserver.wps import process
 from geoscript.process import Process
 from geoscript.geom import *
 
-buffer = Process.lookup('JTS:buffer')
-split = Process.lookup('JTS:splitPolygon')
+buffer = Process.lookup('geo:buffer')
+split = Process.lookup('geo:splitPolygon')
 
 @process(
   title = 'Buffer and Split',

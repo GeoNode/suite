@@ -1,0 +1,63 @@
+name: places
+title: Populated places style
+feature-styles:
+- name: name
+  rules:
+  - scale: [1e8,max]
+    filter: ${ADM0CAP = 1}
+    symbolizers:
+    - point:
+        size: 3
+        symbols:
+        - mark:
+            shape: circle
+            fill-color: '#000000'
+  - scale: [min,1e8]
+    filter: ${ADM0CAP = 1}
+    symbolizers:
+    - point:
+        size: ${log(POP_MAX)/log(4)}
+        symbols:
+        - mark:
+            shape: star
+            fill-color: '#000000'
+    - point:
+        size: ${log(POP_MAX)/log(4)+1}
+        symbols:
+        - mark:
+            shape: circle
+            stroke-color: '#000000'
+  - scale: [min,5e7]
+    filter: ${ADM0CAP = 1}  
+    symbolizers:
+    - text:
+        label: ${NAME}
+        font-weight: bold
+        displacement: [5,4]
+        x-labelPriority: ${10-LABELRANK}
+  - scale: [5e6,1e7]
+    else: true
+    symbolizers:
+      - point:
+          size: ${log(POP_MAX)/log(4)}
+          symbols:
+          - mark:
+              shape: circle
+              stroke-color: '#000000'
+              fill-color: '#777777'
+              fill-opacity: 0.5
+  - scale: [min,5e6]
+    else: true
+    symbolizers:
+      - point:
+          size: ${log(POP_MAX)/log(4)+1}
+          symbols:
+          - mark:
+              shape: circle
+              stroke-color: '#000000'
+              fill-color: '#777777'
+              fill-opacity: 0.5
+      - text:
+          label: ${NAME}
+          displacement: [5,4]
+          x-labelPriority: ${10-LABELRANK}

@@ -187,11 +187,11 @@ The following example will import PostGIS tables from a database called ``munici
       * - :guilabel:`Database`
         - :guilabel:`municipal`
       * - :guilabel:`Schema`
-        - :guilabel:`opengeo`
+        - :guilabel:`public`
       * - :guilabel:`Username`
-        - :guilabel:`username`
+        - :guilabel:`postgres`
       * - :guilabel:`Password`
-        - :guilabel:`opengeo`
+        - :guilabel:`postgres`
 
    .. figure:: img/guiexample_postgisconnection.png
 

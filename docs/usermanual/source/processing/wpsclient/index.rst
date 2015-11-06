@@ -5,7 +5,7 @@ Using WPS with OpenLayers and the Boundless SDK
 
 OpenLayers includes a Web Processing Service (WPS) client. With this client you can employ server processes in browser-based mapping applications. For example, you could perform certain geometry manipulations on the server that are not available in a browser environment. The WPS client also supports process chaining, which allows the server to perform more complex operations without the need to return the result to the client at each intermediate step.
 
-This tutorial will describe how to use a WPS process to manipulate a locally-created geometry in the browser, first using OpenLayers, and then by creating an interactive application using the :ref:`Boundless SDK <webapps.sdk.dev>`.
+This tutorial will describe how to use a WPS process to manipulate a locally-created geometry in the browser, first using OpenLayers, and then by creating an interactive application using the :ref:`Boundless SDK <webapps.sdk>`.
 
 
 Creating an OpenLayers.WPSClient instance
@@ -58,13 +58,13 @@ These geometries can be programmatically created in OpenLayers using ``OpenLayer
         'LINESTRING(117 22,112 18,118 13, 115 8)'
     );
 
-The specific process we are going to employ here is the ``JTS:splitPolygon`` process. This takes a polygon and line as inputs, and returns a geometry collection consisting of polygons that are created through bisecting the polygon with the line. With the ``OpenLayers.WPSClient`` instance, you can use this process in a web application. The following code block executes the ``JTS:splitPolygon`` process with the polygon and line geometries as inputs.
+The specific process we are going to employ here is the ``geo:splitPolygon`` process. This takes a polygon and line as inputs, and returns a geometry collection consisting of polygons that are created through bisecting the polygon with the line. With the ``OpenLayers.WPSClient`` instance, you can use this process in a web application. The following code block executes the ``geo:splitPolygon`` process with the polygon and line geometries as inputs.
 
 .. code-block:: javascript
 
     wpsClient.execute({
         server: 'local',
-        process: 'JTS:splitPolygon',
+        process: 'geo:splitPolygon',
         inputs: {
             polygon: mypolygon,
             line: myline
@@ -91,7 +91,7 @@ The final ``success`` function opens alert boxes that display the Well Known Tex
 Determining process input identifiers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The names of the ``inputs`` must match the input identifiers of the process. In this case, the input identifiers for the ``JTS:splitPolygon`` process are named ``polygon`` and ``line``. There are two ways to find this information.
+The names of the ``inputs`` must match the input identifiers of the process. In this case, the input identifiers for the ``geo:splitPolygon`` process are named ``polygon`` and ``line``. There are two ways to find this information.
 
 #. It is simplest to look up the input identifiers in the WPS Request Builder of the GeoServer instance. The WPS Request Builder can be found in the :guilabel:`Demos` section of the UI.
 
@@ -101,7 +101,7 @@ The names of the ``inputs`` must match the input identifiers of the process. In 
 
 #. You can find the input identifiers manually by running a DescribeProcess request and noting the ``<ows:Identifier>`` for each ``<Input>``. For example::
 
-      http://GEOSERVER_HOME/ows?service=wps&version=1.0.0&request=DescribeProcess&Identifier=JTS:splitPolygon
+      http://GEOSERVER_HOME/ows?service=wps&version=1.0.0&request=DescribeProcess&Identifier=geo:splitPolygon
 
    This would return:
 
@@ -138,10 +138,10 @@ Instead of calling ``execute`` directly from the ``WPSClient`` as in the previou
 
 .. code-block:: javascript
 
-    var intersection = wpsClient.getProcess('local', 'JTS:intersection');
-    var buffer = wpsClient.getProcess('local', 'JTS:buffer');
+    var intersection = wpsClient.getProcess('local', 'geo:intersection');
+    var buffer = wpsClient.getProcess('local', 'geo:buffer');
 
-The ``JTS:intersection`` process is the first process in the chain, so configure it first:
+The ``geo:intersection`` process is the first process in the chain, so configure it first:
 
 .. code-block:: javascript
 
@@ -170,7 +170,7 @@ With the intersection function defined, let's configure and execute the buffer p
         }
     });
 
-The intersection process has an ``output`` method which we use to get a handle that we can pass as input to the buffer process. The rest of the code block is equivalent to the configuration for the ``JTS:splitPolygon`` example above.
+The intersection process has an ``output`` method which we use to get a handle that we can pass as input to the buffer process. The rest of the code block is equivalent to the configuration for the ``geo:splitPolygon`` example above.
 
 
 Processes with multiple outputs
@@ -201,13 +201,13 @@ The following code block shows how the intersection/buffer example in the previo
         }
     });
 
-In this case, the ``JTS:buffer`` process doesn't produce multiple outputs, but it is trivial to replace this process in your code with one that does.
+In this case, the ``geo:buffer`` process doesn't produce multiple outputs, but it is trivial to replace this process in your code with one that does.
 
 
 Building an interactive application
 -----------------------------------
 
-Using the :ref:`Boundless SDK <webapps.sdk.dev>`, you can create a lightweight demo application that allows the user to draw geometries and execute the SplitPolygon and Intersection/Buffer processes as created above.
+Using the :ref:`Boundless SDK <webapps.sdk>`, you can create a lightweight demo application that allows the user to draw geometries and execute the SplitPolygon and Intersection/Buffer processes as created above.
 
 To create our custom application, we must first create a minimal :file:`app.js` file and a custom ``app_wpsdemo`` plugin in its own :file:`WPSDemo.js` file. These files will then be copied into a template application.
 

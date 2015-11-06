@@ -7,6 +7,10 @@
     <param-name>GEOWEBCACHE_CACHE_DIR</param-name>
     <param-value>@GEOWEBCACHE_CACHE_DIR@</param-value>
   </context-param>
+  <context-param>
+    <param-name>GEOWEBCACHE_CONFIG_DIR</param-name>
+    <param-value>@GEOWEBCACHE_CONFIG_DIR@</param-value>
+  </context-param>
   @-->
 
   <!-- pick up all spring application contexts -->

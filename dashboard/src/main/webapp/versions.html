@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OpenGeo Suite Dashboard - Releases</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/font-awesome.css" rel="stylesheet" media="screen">
+    <link href="css/app.css" rel="stylesheet" media="screen">
+    <link href="css/versions.css" rel="stylesheet" media="screen">
+
+  </head>
+  <body onload="onLoad()">
+    <div class="container-fluid">
+      <div class="navbar navbar-static navbar-inverse" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"></a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="homelink tablink" href="index.html">Dashboard</a></li>
+              <li><a id="gslink" class="tablink" href="index.html#gettingstarted">Getting Started</a></li>
+              <li class="active"><a id="_documentationlink" class="tablink">Documentation</a></li>
+              <li class="hidden-xs"><h5 class="text-center version-info"><span class="version"></span></h5></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container versions-container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-1 col-sm-9">
+          <h2>Recent Releases</h2>
+          <div class="panel-group" id="release-accordion">
+
+            <!-- 4.7 Release -->
+            <h3 class="release-no">4.7 <small style="margin-left: 25px;">Released August 18, 2015</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.7/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseNegativeOne">
+                        <span class="accordion-icon"></span><span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseNegativeOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <h4>OpenGeo Suite changes:</h4>
+                    <ul>
+                      <li>New WPS Builder utility for configuring and executing WPS processes in GeoServer (Enterprise editions only)</li>
+                      <li>New CloudWatch extension in GeoServer for connecting to Amazon CloudWatch monitoring service</li>
+                      <li>New GeoMesa extension in GeoServer for integrating with Accumulo.</li>
+                      <li>Java 8 is now supported</li>
+                      <li>Composer/YSLD improvements: 
+                        <ul>
+                          <li>Added additional supported formats, to match GeoServer import functionality</li>
+                          <li>Color swatches for color codes for easier identification</li>
+                          <li>Full screen YSLD editing mode</li>
+                          <li>Complete YSLD hinter for assistance with syntax</li>
+                          <li>Improvements in YSLD syntax</li>
+                          <li>Recent alerts dialog for parsing errors</li>
+                          <li>Graceful automatic logout</li>
+                        </ul>
+                      </li>
+                      <li>Plus numerous bug fixes and updates to all components</li>
+                    </ul>
+                    <p><strong>Components included:</strong></p>
+                    <ul>
+                      <li>GeoServer 2.7.1</li>
+                      <li>GeoWebCache 1.7.2</li>
+                      <li>GeoTools 13</li>
+                      <li>PostgreSQL 9.4.1</li>
+                      <li>PostGIS 2.1.7</li>
+                      <li>OpenLayers 3</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+
+
+
+            <!-- 4.6.1 Release -->
+            <h3 class="release-no">4.6.1 <small style="margin-left: 25px;">Released June 17, 2015</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.6.1/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseNegativeOne">
+                        <span class="accordion-icon"></span><span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseNegativeOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>This release addresses a security vulnerability in GeoServer that can allow
+                    unauthorized access to files on the host server. All users of OpenGeo Suite 
+                    are strongly encouraged to update to this version.</p>
+                    <p>More information about the security vulnerability is available in the <a href="https://osgeo-org.atlassian.net/browse/GEOS-7032">GeoServer bug tracker</a>.</p>
+
+                  </div>
+                </div>
+            </div>
+
+            <!-- 4.6 Release -->
+            <h3 class="release-no">4.6 <small style="margin-left: 25px;">Released May 12, 2015</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.6/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseNegativeOne">
+                        <span class="accordion-icon"></span><span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseNegativeOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <h4>OpenGeo Suite changes:</h4>
+                    <ul>
+                      <li>Enhanced Composer beta for styling maps (Enterprise editions only)</li>
+                      <li>Improved reliability, handling, and security when performing geospatial analysis</li>
+                      <li>Multiple updates to rendering and tile design capabilities</li>
+                    </ul>
+                    <p>This release also includes the following <strong>Component</strong> upgrades:</p>
+                    <h4>GeoServer 2.7</h4>
+                    <ul style="margin-bottom: 25px;">
+                      <span style="line-height: 24px;">[Reference: <a href="http://blog.geoserver.org/2015/03/23/geoserver-2-7-released/" style="color: black;">GeoServer release notes</a>]</span>
+                    </ul>
+                    <h4>GeoWebCache 1.7</h4>
+                    <ul style="margin-bottom: 25px;">
+                      <span style="line-height: 24px;">[Reference: <a href="https://github.com/GeoWebCache/geowebcache/blob/1.7.x/RELEASE_NOTES.txt" style="color: black;">GWC release notes</a>]</span>
+                    </ul>
+                    <h4>GeoTools 13</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="http://geotoolsnews.blogspot.ca/2015/03/geotools-130-released.html" style="color: black;">GeoTools release notes</a>]</span>
+                    </ul>
+                    <h4>PostgreSQL 9.3.5</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="http://www.postgresql.org/docs/9.3/static/release-9-3-5.html" style="color: black;">PostgreSQL release notes</a>]</span>
+                    </ul>
+                    <h4>PostGIS 2.1.7</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="http://postgis.net/2015/04/06/postgis-2.1.7" style="color: black;">PostGIS release notes</a>]</span>
+                    </ul>
+                    <h4>OpenLayers 3</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="https://github.com/openlayers/ol3/releases/tag/v3.5.0" style="color: black;">OpenLayers release notes</a>]</span>
+                    </ul>
+                    <br/>
+                    <p><strong>Components included:</strong></p>
+                    <ul>
+                      <li>GeoServer 2.7, rev 60003c3</li>
+                      <li>GeoWebCache 1.7, rev bee486b</li>
+                      <li>GeoTools 13, rev 843efd9</li>
+                      <li>PostgreSQL 9.3.5</li>
+                      <li>PostGIS 2.1.7</li>
+                      <li>OpenLayers 3, rev fbc0c90</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+
+            <!-- 4.5 Release -->
+            <h3 class="release-no">4.5 <small style="margin-left: 25px;">Released December 4, 2014</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.5/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseNegativeOne">
+                        <span class="accordion-icon"></span><span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseNegativeOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <h4>OpenGeo Suite changes:</h4>
+                    <ul>
+                      <li>OpenLayers: <a href="http://openlayers.org/ol3-cesium/" target="_blank">OL3-Cesium</a> added</li>
+                      <li>Composer beta for styling maps (Enterprise editions only)</li>
+                      <li>GeoServer Admin in Firefox bug fix</li>
+                    </ul>
+                    <p>This release also includes the following <strong>Component</strong> upgrades:</p>
+                    <h4>GeoServer 2.6.1</h4>
+                    <ul style="margin-bottom: 25px;">
+                      <span style="line-height: 24px;">[Reference: <a href="http://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10311&version=20651" style="color: black;">GeoServer release notes</a>]</span>
+                    </ul>
+                    <h4>GeoWebCache 1.6</h4>
+                    <ul style="margin-bottom: 25px;">
+                      <span style="line-height: 24px;">[Reference: <a href="https://github.com/GeoWebCache/geowebcache/blob/1.6.x/RELEASE_NOTES.txt" style="color: black;">GWC release notes</a>]</span>
+                    </ul>
+                    <h4>GeoTools 12</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="http://geotoolsnews.blogspot.com/2014/10/geotools-120-released.html" style="color: black;">GeoTools release notes</a>]</span>
+                    </ul>
+                    <h4>PostgreSQL 9.3.5</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="http://www.postgresql.org/docs/9.3/static/release-9-3-5.html" style="color: black;">PostgreSQL release notes</a>]</span>
+                    </ul>
+                    <h4>PostGIS 2.1.4</h4>
+                    <ul>
+                      <span style="line-height: 24px;">[Reference: <a href="http://postgis.net/2014/09/10/postgis-2.1.4" style="color: black;">PostGIS release notes</a>]</span>
+                    </ul>
+                    <h4>OpenLayers 3</h4>
+                    <ul>
+                      <li><a href="https://github.com/openlayers/ol3-cesium">OL3-Cesium</a> 3D Integration Library added</li>
+                      <span style="line-height: 24px;">[Reference: <a href="https://github.com/openlayers/ol3/releases/tag/v3.0.0" style="color: black;">3.0.0 release</a>, plus stable updates until Nov. 4th, 2014.]</span>
+                    </ul>
+                    <br/>
+                    <p><strong>Components included:</strong></p>
+                    <ul>
+                      <li>GeoServer 2.6.1, rev a12e54e</li>
+                      <li>GeoWebCache 1.6, rev 476ab3e</li>
+                      <li>GeoTools 12, rev ea2b82b</li>
+                      <li>PostgreSQL 9.3.5</li>
+                      <li>PostGIS 2.1.4</li>
+                      <li>OpenLayers 3, rev afe1467</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <!-- 4.1.1 Release -->
+            <h3 class="release-no">4.1.1 <small style="margin-left: 25px;">Released September 2, 2014</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.1.1/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseZero">
+                        <span class="accordion-icon"></span><span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseZero" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>This maintenance release includes installer and upgrade bug fixes.</p>
+                    <h4>OpenGeo Suite changes:</h4>
+                    <ul>
+                      <li>Bug fixes in installers and when upgrading packages for various platforms (Linux, Windows, OS X affected)</li>
+                      <li>Documentation bug fixes</li>
+                      <li>Upgraded to geos 3.4.2</li>
+                      <li>Postgres Pointcloud is now baked into the Windows install (instead of a checkbox)</li>
+                      <li>PostGIS libproj grid shift file locations updated on OS X and Windows</li>
+                      <li>Fixed gdal package availability in python and removed bridj bindings (use JNI)</li>
+                    </ul>
+                    <p>This maintenance release also includes the following <strong>Component</strong> upgrades:</p>
+                    <h4>GeoServer 2.5.2+</h4>
+                    <ul style="margin-bottom: 25px;">
+                      <li>Fix for rapid concurrent REST API calls to datastores</li>
+                      <li>JDBCConfig logging initialization fix</li>
+                      <li>Validation of MetadataLink URL changes via REST API</li>
+                      <li>GetFeatureInfo engine fixes for unfilled polygons and dashed lines</li>
+                      <li>Configuration issue fix fot style edits affecting other styles</li>
+                      <li>DBMS connection leak in some WFS GetFeature with bounds enabled</li>
+                      <li>Fix for WPS as a workspace-specific service and activity-reporting during asynchronous requests</li>
+                      <li>Ability to restrict output formats supported by WMS GetMap and GetFeatureInfo</li>
+                      <li>More docs on how to setup JNDI connection pools</li>
+                      <span style="line-height: 24px;">[Reference: <a href="http://blog.geoserver.org/2014/07/23/geoserver-2-5-2-release/" style="color: black;">GeoServer release notes</a>]</span>
+                    </ul>
+                    <h4>GeoWebCache 1.5.3+</h4>
+                    <ul style="margin-bottom: 25px;">
+                      <li>Styles from non-global workspace virtual services (WMS) can now be used by Embedded GWC</li>
+                      <li>Layer name field in DiscQuota DB updated to 128 chars</li>
+                      <li>Fix for NioLock failing to release its memory lock</li>
+                      <li>Fixed support for STYLE parameter in WMTS</li>
+                      <li>Fixed unescaped XML characters in capabilities documents</li>
+                      <li>Exception thrown when calling getCoverageIntersections on a GridSubset</li>
+                      <li>Fix for unrecognized element gwcConfig on startup</li>
+                      <span style="line-height: 24px;">[Reference: <a href="https://github.com/GeoWebCache/geowebcache/blob/1.5.x/RELEASE_NOTES.txt" style="color: black;">GWC release notes</a>]</span>
+                    </ul>
+                    <h4>GeoTools 11.2</h4>
+                    <ul>
+                      <li>Image mosaic fixes regarding performance, granule harvesting, and heterogeneous mosaic management</li>
+                      <li>Fixes in XML encoding, in GML and WPS land</li>
+                      <li>Upgraded imageio-ext dependency to 1.1.10</li>
+                      <li>Improvements in Grib and NetCDF formats</li>
+                      <span style="line-height: 24px;">[Reference: <a href="http://geotoolsnews.blogspot.com/2014/07/geotools-112-released.html" style="color: black;">GeoTools release notes</a>]</span>
+                    </ul>
+                    <br/>
+                    <p><strong>Components included:</strong></p>
+                    <ul>
+                      <li>GeoServer 2.5.2+, rev c7886eb2</li>
+                      <li>GeoWebCache 1.5.3+, rev 9a50eaa</li>
+                      <li>GeoTools 11.2, rev 6cc70bb</li>
+                      <li>PostgreSQL 9.3.4</li>
+                      <li>PostGIS 2.1.3</li>
+                      <li>OpenLayers 3.0PRE, rev 7d9e13f3 (same as 4.1)</li>
+                      <li>QGIS 2.2</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <!-- 4.1 Release -->
+            <h3 class="release-no">4.1 <small>Released June 26, 2014</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.1/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseOne">
+                        <span class="accordion-icon"></span><span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <h4>OpenGeo Suite upgrades</h4>
+                    <ul>
+                      <li><strong>Improved enterprise packages.</strong> Whether developing applications on OSX or deploying a Windows production system, our packages are designed to help you use our software more effectively. Now enterprise customers benefit from other typical IT deployment options like supported deployments for Amazon Web Services and VMware.</li>
+                      <li><strong>Automated clustering.</strong> We&apos;re continually improving our clustering features for those needing high availability or better scaling under load. These improvements make spinning up clusters even easier for systems administrators by providing new automation options.</li>
+                      <li><strong>New data sources.</strong> OpenGeo Suite can now publish from MongoDB and GeoPackage.</li>
+                      <li><strong>New Boundless SDK templates</strong> that use a production-ready version of OpenLayers 3. These free templates make it easier and faster to deploy enterprise applications built using OpenGeo Suite.</li>
+                      <li><strong>QGIS 2.2 one-click installers.</strong> Dramatically increase the ease and affordability of desktop analysis and editing tools with our bundled QGIS that includes the OpenGeo Explorer plugin to publish maps and data directly to OpenGeo Suite.</li>
+                      <li><strong>Mapmeter now included</strong> with all Enterprise tiers. Our monitoring service helps developers, system administrators, and managers better understand and use their geospatial deployments so we&apos;re including the service for all OpenGeo Suite enterprise customers.</li>
+                    </ul>
+                    <br/>
+                    <p>This maintenance release also includes <strong>Component</strong> upgrades:</p>
+                    <h4>PostgreSQL 9.3.4</h4>
+                    <ul>
+                      <li>Materialized views, great for caching summary information</li>
+                      <li>Enhanced JSON and key-value support, for better non-relational modelling</li>
+                      <li>Writeable foreign tables, for federated databases</li>
+                      <li>Replication enhancements, for database clusters</li>
+                    </ul>
+                    <h4>PostGIS 2.1.3</h4>
+                    <ul>
+                      <li>
+                      Performance improvements in geography, 2-d indexing, and query planning
+                      </li>
+                      <li>
+                      Performance improvements in raster computations and geocoding
+                      </li>
+                      <li>
+                      Many more and faster raster analysis functions
+                      </li>
+                      <li>
+                      Better support for curved geometry types
+                      </li>
+                      <li>
+                      Delaunay triangulation and enhanced 3D object support
+                      </li>
+                    </ul>
+                    <h4>PointCloud LIDAR 0.1.0</h4>
+                    <ul>
+                      <li>Store and analyze multi-dimensional LIDAR data</li>
+                      <li>4:1 lossless compression</li>
+                      <li>Filter on attributes, spatial clip and union data for output</li>
+                      <li>Integration with PostGIS for advanced analysis</li>
+                      <li>Read and write from multiple LIDAR formats with PDAL loader</li>
+                    </ul>
+                    <h4>GeoServer 2.5.1</h4>
+                    <ul>
+                      <li>New standards support for Web Coverage Service (WCS) 2.0 and WCS 2.0 Earth Observation</li>
+                      <li>Batch importer for easier bulk data loading</li>
+                      <li>High performance PNG encoder based on PNGJ library</li>
+                      <li>Improved PostGIS rendering performance using ST_Simplify()</li>
+                      <li>Improved GetFeatureInfo implementation take the shape of the clicked target into consideration, for easier feature identification</li>
+                      <li>Improved support for LDAP groups</li>
+                      <li>Improved performance in large JDBC clustering implementations</li>
+                    </ul>
+                    <h4>GeoWebCache 1.5.2</h4>
+                    <ul>
+                      <li>Transparent GeoServer integration for all WMS request types</li>
+                      <li>Support for longer layer names and GeoServer JDBC catalogue</li>
+                      <li>Enhance support for REST configuration</li>
+                    </ul>
+                    <h4>OpenLayers 3.0PRE</h4>
+                    <ul>
+                      <li>Preview of upcoming OpenLayers 3.0 release</li>
+                      <li>Tiled Layers: Pull tiles from OSM, Bing, MapBox, Stamen, MapQuest, and any other XYZ source you can find. OGC mapping services and untiled layers also supported.</li>
+                      <li>Vector Layers: Render vector data from GeoJSON, TopoJSON, KML, GML, and a growing number of other formats.</li>
+                      <li>Fast &amp; Mobile Ready: Mobile support out of the box. Build lightweight custom profiles with just the components you need.</li>
+                      <li>Cutting Edge &amp; Easy to Customize: Map rendering leverages WebGL, Canvas 2D, and all the latest greatness from HTML5. Style your map controls with straight-forward CSS.</li>
+                    </ul>
+                    <br/>
+                    <p><strong>Components included:</strong></p>
+                    <ul>
+                      <li>PostgreSQL 9.3.4</li>
+                      <li>PostGIS 2.1.3</li>
+                      <li>GeoServer 2.5.1</li>
+                      <li>GeoTools 11 (<a href="http://www.youtube.com/watch?v=4xgx4k83zzc" target="_blank">&quot;These go to 11&quot;</a>)</li>
+                      <li>GeoWebCache 1.5</li>
+                      <li>OpenLayers 3</li>
+                      <li>QGIS 2.2</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <!-- 4.0.2 Release -->
+            <h3 class="release-no">4.0.2 <small style="margin-left: 15px;">Released January 23, 2014</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.0.2/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseTwo">
+                          <span class="accordion-icon"></span> <span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="tab_content">
+                      <div class="tab_content">
+                        <h4>OpenGeo Suite upgrades</h4>
+                        <ul>
+                          <li><strong>Completely new packages.</strong> Whether <a href="http://boundlessgeo.com/2013/10/opengeo-suite-for-osx/">developing applications on OSX</a> or <a href="http://boundlessgeo.com/2013/11/deploy-windows-opengeo-suite/">deploying a Windows production system</a>, our packages are designed to help you use our software more effectively.</li>
+                          <li><strong>Scalability and clustering.</strong> We now offer a <a href="http://boundlessgeo.com/2013/11/cluster-geoserver/">clustering extension for GeoServer</a> for those needing high availability or better scaling under load.</li>
+                          <li><strong>Improved support for LIDAR point clouds.</strong> PostGIS can now <a href="http://boundlessgeo.com/2013/11/manage-lidar-postgis/">natively store and filter LIDAR data</a>.</li>
+                          <li><strong>Catalog support with CSW.</strong> We now ship GeoServer with an <a href="http://boundlessgeo.com/2014/01/leverage-metadata-with-csw/">extension for Catalog Service for Web (CSW)</a>, providing support for Dublin Core and the ISO Metadata Application Profile.</li>
+                          <li><strong>Monitor deployments with Mapmeter.</strong> Our monitoring service helps <a href="http://boundlessgeo.com/2013/11/develop-with-mapmeter/">developers</a>, <a href="http://boundlessgeo.com/2013/12/mapmeter-for-sysadmins/">system administrators</a>, and <a href="http://boundlessgeo.com/2013/12/mapmeter-helps-managers/">managers</a> better understand and use their geospatial deployments.</li>
+                          <li><strong>OpenLayers 3</strong> is a complete rewrite that simplifies the developer experience and takes advantage of modern JavaScript environments to offer a high-performance and fully-featured web mapping library. See how it compares to <a href="http://boundlessgeo.com/2013/12/openlayers-3-and-google-maps-api/">Google Maps API</a> or <a href="http://boundlessgeo.com/2013/12/census-mapping-with-openlayers-3/">GeoExt</a>.</li>
+                          <li>&nbsp;<strong>OpenGeo Suite Exporer Plugin for QGIS</strong> allows users to seamlessly <a href="http://boundlessgeo.com/2013/11/opengeo-suite-and-qgis/">manage and publish from the desktop</a> to OpenGeo Suite.</li>
+                        </ul>
+                        <p>This maintenance release also includes numerous fixes and <strong>Component</strong> upgrades:</p>
+                        <p><strong>Components included:</strong></p>
+                        <ul>
+                          <li>PostgreSQL 9.3.1</li>
+                          <li>PostGIS 2.1.1</li>
+                          <li>GeoTools 10, rev 3bb3df4</li>
+                          <li>GeoServer 2.4.3, rev 4f295d3</li>
+                          <li>GeoWebCache 1.5, rev 96c076a</li>
+                          <li>OpenLayers 2.12, rev fbc0c90 (OpenLayers 3 Supported)</li>
+                          <li>QGIS 2.0</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- 4.0 Release -->
+            <h3 class="release-no">4.0 <small>Released November 05, 2013</small></h3>
+            <h4 style="margin-left: 16px;">
+              <a href="http://suite.opengeo.org/docs/4.0/" target="_blank"><span class="accordion-btn"><i class="fa fa-share"></i></span> <span class="doc-text">Documentation</span></a>
+            </h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#release-accordion" href="#collapseThree">
+                          <span class="accordion-icon"></span> <span class="doc-text">Release Notes</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="tab_content">
+                        <p>This release includes the following improvements and <strong>Component</strong> upgrades:</p>
+                        <h4>PostgreSQL 9.3</h4>
+                        <ul>
+                          <li>Materialized views, great for caching summary information</li>
+                          <li>Enhanced JSON and key-value support, for better non-relational modelling</li>
+                          <li>Writeable foreign tables, for federated databases</li>
+                          <li>Replication enhancements, for database clusters</li>
+                        </ul>
+                        <h4>PostGIS 2.1</h4>
+                        <ul>
+                          <li>Performance improvements in geography, 2-d indexing, and query planning</li>
+                          <li>Performance improvements in raster computations and geocoding</li>
+                          <li>Many more and faster raster analysis functions</li>
+                          <li>Better support for curved geometry types</li>
+                          <li>Delaunay triangulation and enhanced 3D object support</li>
+                        </ul>
+                        <h4>PointCloud LIDAR support</h4>
+                        <ul>
+                          <li>Store and analyze multi-dimensional LIDAR data</li>
+                          <li>4:1 lossless compression</li>
+                          <li>Filter on attributes, spatial clip and union data for output</li>
+                          <li>Integration with PostGIS for advanced analysis</li>
+                          <li>Read and write from multiple LIDAR formats with PDAL loader</li>
+                        </ul>
+                        <h4>GeoServer 2.4</h4>
+                        <ul>
+                          <li>Catalog Services as an extension for the Web (CSW) 2.0.2 implementation with support for the ISO Metadata Application Profile next to Dublin Core metadata</li>
+                          <li>Clustering extensions that make management of a GeoServer cluster much easier by storing the GeoServer catalog in an external database as well as providing a messaging layer that automates node synchronization on configuration change events</li>
+                          <li>CSS-like styling tools included as an extension</li>
+                          <li>Editor for GeoWebCache parameter filters</li>
+                          <li>Improved rendering of complex point symbols in KML</li>
+                        </ul>
+                        <h4>GeoWebCache 1.5</h4>
+                        <ul>
+                          <li>Metastore removed</li>
+                          <li>Ability to create meaningful names for capabilities files</li>
+                          <li>Pluggable URL Mangling</li>
+                          <li>Disk quota over JDBC</li>
+                          <li>List layers through REST API</li>
+                          <li>Configurable GetInfo MIME formats</li>
+                          <li>New ParameterFilter types can be added easily</li>
+                          <li>XStream configuration can be varied between REST and Config file contexts</li>
+                          <li>REST endpoint for mass truncating layers</li>
+                          <li>Documentation improvements</li>
+                        </ul>
+                        <h4>Support for OpenLayers 3.0</h4>
+                        <ul>
+                          <li>While our packages ship with OpenLayers 2.12, our customers also receive early access and support for OpenLayers 3, which includes many new features:</li>
+                          <li>Tiled Layers: Pull tiles from OSM, Bing, MapBox, Stamen, MapQuest, and any other XYZ source you can find. OGC mapping services and untiled layers also supported.</li>
+                          <li>Vector Layers: Render vector data from GeoJSON, TopoJSON, KML, GML, and a growing number of other formats.</li>
+                          <li>Fast &amp; Mobile Ready: Mobile support out of the box. Build lightweight custom profiles with just the components you need.</li>
+                          <li>Cutting Edge &amp; Easy to Customize: Map rendering leverages WebGL, Canvas 2D, and all the latest greatness from HTML5. Style your map controls with straight-forward CSS.</li>
+                        </ul>
+                        <br/>
+                        <p><strong>Components included:</strong></p>
+                        <ul>
+                          <li>PostgreSQL 9.3</li>
+                          <li>PostGIS 2.1</li>
+                          <li>GeoServer 2.4</li>
+                          <li>GeoTools 10</li>
+                          <li>GeoWebCache 1.5</li>
+                          <li>OpenLayers 2 (+ OpenLayers 3 Support)</li>
+                          <li>QGIS 2.0</li>
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      <div class="boundless-logo"><a href="http://boundlessgeo.com"> </a></div>
+      <ul class="footer-nav pull-left">
+        <li><a class="aboutlink tablink" href="">About</a></li>
+        <li><a href="http://boundlessgeo.com/site-map/legal/opengeo-suite-eula/">Legal</a></li>
+        <li><a href="http://boundlessgeo.com/about/contact-us/">Contact</a></li>
+      </ul>
+      <ul class="footer-nav pull-right">
+        <li><a href="http://boundlessgeo.com/support/">Support</a></li>
+        <li><a href="http://boundlessgeo.com/resources/training/">Training</a></li>
+        <li><a href="http://boundlessgeo.com/solutions/professional-services/">Pro<span class="hidden-xs">fessional</span> Services</a></li>
+      </ul>
+    </footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+      $().ready(function() {
+         $(".panel-group .panel-title a").addClass("collapsed");
+      });
+    </script>
+</body>
+</html>

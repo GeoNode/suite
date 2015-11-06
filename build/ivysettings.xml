@@ -1,0 +1,14 @@
+<ivysettings>
+    <caches defaultCacheDir="${ivy.cache}"/>
+    <settings defaultResolver="default"/>
+    <resolvers>
+        <chain name="default" returnFirst="true">
+            <filesystem name="local" m2compatible="true">
+              <ivy pattern="${mvn.repo}/[organization]/[module]/[revision]/[module]-[revision](-[classifier]).pom"/>
+              <artifact pattern="${mvn.repo}/[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]"/>
+            </filesystem>
+            <ibiblio name="central" m2compatible="true"/>
+            <ibiblio name="boundless" m2compatible="true" root="https://boundless.artifactoryonline.com/boundless/main"/>
+        </chain>
+    </resolvers>
+</ivysettings>

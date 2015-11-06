@@ -13,3 +13,4 @@ This section describes some of the options available for administering your Post
    schemas
    security
    backup
+   movedir

@@ -1,0 +1,455 @@
+/* Suite-specific Sass overrides */
+
+body
+  z-index: -1
+  background: $background-color
+  color: $base-font-color
+  font-family: $base-font-family
+  font-size: 14px !important
+  text-align: left
+
+p
+  font-size: 14px !important
+  line-height: 1.8em
+  margin-bottom: .85em
+
+h1, h2, h3, h4, h5, h6
+  font-family: $custom-font-family
+  font-weight: bold
+  margin-top: .8em
+
+h1
+  font-size: 2em !important
+h2
+  font-size: 1.6em !important
+  font-weight: 300 !important
+
+.section
+  margin-top: 2em
+
+a
+  font-size: 14px
+  color: #28728D
+  outline: none !important
+  focus: none
+
+  &:hover
+    color: #00A78D
+    text-decoration: underline
+
+.code
+  font-size: 90% !important
+
+.rst-content
+  img
+    border: 1px solid #888
+    box-shadow: 0.33em 0.33em 0.17em #888, 0.33em 0.33em 1em rgba(0,0,0,0.3)
+    max-width: 100%
+  tt
+    font-size: 90% !important
+  div.figure
+    margin-bottom: 24px
+    text-align: center
+  .caption
+    text-align: inherit
+    margin-top: .5em
+div[class^='highlight'] pre
+  font-size: 13px
+  line-height: 1.8em
+
+
+/* Header options */
+
+.pg-header
+  background-color: $skyblue !important
+.gs-header
+  background-color: $seafoam-green !important
+.gwc-header
+  background-color: $seafoam-green !important
+.ge-header
+  background-color: $seafoam-green !important
+.sdk-header
+  background-color: $seafoam-green !important
+.ol-header
+  background-color: $seafoam-green !important
+.qgis-header
+  background-color: $seafoam-green !important
+
+#header
+  position: fixed
+  height: 70px
+  padding: 0
+  overflow: hidden
+  background-color: $nav-color
+  display: block
+  z-index: 1000
+  width: 100%
+
+  .suite_logo a
+    margin: 1em 0 0 1em
+    float: left
+    width: 304px
+    height: 40px
+    overflow: hidden
+    text-indent: -9999em
+    background: url("../img/opengeo-logo.png") no-repeat
+
+  .suite_logo_only
+    display: inline-block
+    vertical-align: top
+    margin-top: 1em
+    a
+      background: url("../img/opengeo-logo-only.png") no-repeat
+      width: 40px
+      height: 40px
+      text-indent: -9999em
+      float: left
+      overflow: hidden
+      padding-left: 10px
+    i
+      color: $white
+      font-size: 28px
+      padding: .2em .5em 0
+
+  .community_logo
+    display: inline-block
+    padding-left: 15px
+    @include media(min-width 320px max-width 480px)
+      padding-left: 0
+  .pg_logo a
+    background: url("../img/postgis-logo.png") no-repeat
+    width: 203px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+  .gs_logo a
+    background: url("../img/geoserver-logo.png") no-repeat
+    width: 235px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+    @include media(min-width 320px max-width 480px)
+      background-size: 212px 36px
+      width: 212px
+      margin-left: 10px
+  .gwc_logo a
+    background: url("../img/geowebcache-logo.png") no-repeat
+    width: 300px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+    @include media(min-width 320px max-width 480px)
+      background-size: 210px 28px
+      margin-top: 1.4em
+      margin-left: 10px
+      width: 210px
+  .sdk_logo a
+    background: url("../img/boundlesssdk-logo.png") no-repeat
+    width: 322px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+    @include media(min-width 320px max-width 480px)
+      background-size: 225px 28px
+      margin-left: 10px
+      margin-top: 1.5em
+      width: 225px
+  .ge_logo a
+    background: url("../img/geoexplorer-logo.png") no-repeat
+    width: 272px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+    @include media(min-width 320px max-width 480px)
+      background-size: 212px 36px
+      margin-left: 5px
+      margin-top: 1.1em
+      width: 212px
+  .ol_logo a
+    background: url("../img/openlayers-logo.png") no-repeat
+    width: 227px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+    @include media(min-width 320px max-width 480px)
+      background-size: 204px 36px
+      margin-left: 10px
+      margin-top: 1.3em
+      width: 204px
+  .qgis_logo a
+    background: url("../img/qgis-logo.png") no-repeat
+    width: 144px
+    height: 40px
+    display: inline-block
+    margin: 1em 0 0
+
+
+  @include hidpi(1.5)
+    .suite_logo a
+      background: url("../img/opengeo-logo@2x.png") no-repeat
+      background-size: 304px 40px
+      @include media(min-width 320px max-width 480px)
+        margin-left: 5px
+    .pg_logo a
+      background: url("../img/postgis-logo@2x.png") no-repeat
+      background-size: 203px 40px
+    .gs_logo a
+      background: url("../img/geoserver-logo@2x.png") no-repeat
+      background-size: 235px 40px
+      @include media(min-width 320px max-width 480px)
+        background-size: 212px 36px
+        margin-top: 1.1em
+        margin-left: 10px
+        width: 212px
+    .gwc_logo a
+      background: url("../img/geowebcache-logo@2x.png") no-repeat
+      background-size: 300px 40px
+      @include media(min-width 320px max-width 480px)
+        background-size: 210px 28px
+        margin-top: 1.6em
+        margin-left: 10px
+        width: 210px
+    .sdk_logo a
+      background: url("../img/boundlesssdk-logo@2x.png") no-repeat
+      background-size: 322px 40px
+      @include media(min-width 320px max-width 480px)
+        background-size: 225px 28px
+        margin-left: 5px
+        margin-top: 1.4em
+        width: 225px
+    .ol_logo a
+      background: url("../img/openlayers-logo@2x.png") no-repeat
+      background-size: 227px 40px
+      @include media(min-width 320px max-width 480px)
+        background-size: 204px 36px
+        margin-left: 10px
+        margin-top: 1.3em
+        width: 204px
+    .ge_logo a
+      background: url("../img/geoexplorer-logo@2x.png") no-repeat
+      background-size: 236px 40px
+      @include media(min-width 320px max-width 480px)
+        background-size: 212px 36px
+        margin-top: 1.1em
+        margin-left: 5px
+        width: 212px
+    .qgis_logo a
+      background: url("../img/qgis-logo@2x.png") no-repeat
+      background-size: 144px 40px
+
+
+  .component_version_info
+    display: inline-block
+    color: $white
+    vertical-align: top
+    margin-top: 2.5em
+
+  .version_info
+    margin: 1.2em 3.236em 0 1.5em
+    float: left
+    color: $white
+    font-size: 1.4em
+    font-weight: 300
+  .powered_by
+    float: right
+    background: url("../img/powered-by-boundless.png") no-repeat
+    height: 30px
+    width: 100px
+    margin: 1.3em 1em 0 0
+    @media screen and (max-width: 768px)
+      display: none
+
+
+/* Community Docs Ribbon */
+
+#ribbon
+  width: 250px
+  height: 40px
+  z-index: 3000
+  display: inline-block
+  margin: 0 auto
+  left: 50%
+  top: -1px
+  position: fixed
+  overflow: hidden
+  background-color: $dark-nectarine
+  box-shadow: 0 0 5px #666
+  cursor: pointer
+  @media screen and (max-width: 768px)
+    display: none
+  .ribbon_container
+    box-shadow: 0 0 3px rgba(0,0,0,0.25)
+    position: relative
+    width: 100%
+    height: 100%
+    overflow: hidden
+    margin: 0 auto
+    border: 1px solid $nectarine
+    padding: 10px
+    #disclaimer
+      display: none
+      padding: 0 10px 0 10px
+      font-size: .8em
+      line-height: 1.5em
+      color: $white
+      margin-bottom: 12px
+
+  .base
+    width: 100%
+    z-index: 2
+    text-align: center
+    color: $white
+    font-weight: bold
+    text-decoration: none
+    text-shadow: 0 0 5px #444
+  .base:after
+    content: ''
+    position: absolute
+    top: 0
+    width: 94%
+    left: 6px
+    height: 100%
+    border-left: 1px dashed #631a15
+    border-right: 1px dashed #631a15
+
+/* end ribbon */
+
+
+.back-to-suite
+  display: inline-block
+  float: right
+  background-color: $monaco
+  color: $white
+  height: 70px
+  width: 70px
+  .back-to-suite-inner
+    background: url("../img/opengeo-logo-only.png") no-repeat
+    height: 40px
+    width: 40px
+    margin: 1em auto
+
+.hidden-xs
+  @media screen and (max-width: 768px)
+    display: none
+
+.wy-grid-for-nav, .wy-nav-shift
+  top: 70px
+
+.wy-nav-side
+  top: 0px
+  background: #272525
+
+nav.stickynav
+  top: 70px
+
+.wy-side-nav-search
+  background-color: $side-nav-search-color
+  padding-top: 1em
+  padding-bottom: 1em
+  margin-bottom: 0
+
+.wy-side-nav-search input
+  font-size: 90% !important
+
+.wy-nav-content-wrap.shift
+  +media($tablet)
+    top: 70px !important
+
+.wy-nav-top
+  background-color: $secondary-nav-color
+  padding: 0 20px 0
+  i
+    padding-top: 9px
+
+.wy-menu-vertical
+  a
+    padding-top: .7em
+    padding-bottom: .7em
+  li.current
+    margin-top: .7em
+    margin-bottom: .7em
+    .toctree-l2
+      margin-top: 0
+      margin-bottom: 0
+    a
+      padding-top: .7em
+      padding-bottom: .7em
+  li.on a
+    padding-top: .7em
+    padding-bottom: .7em
+
+
+.rst-content
+  dl
+    dd
+      margin-top: 3px
+      margin-bottom: 10px
+      margin-left: 30px
+  .toctree-wrapper
+    ul
+      li.toctree-l1
+        font-weight: bold
+        padding-top: 1em
+        ul
+          padding-top: .5em
+      li.toctree-l2
+        font-weight: normal
+
+.rst-versions
+  border-top: #272525
+  .rst-other-versions
+    hr
+      margin: 8px 0
+    .component-desc
+      color: $dark-gray
+      font-size: 1.1em
+      padding-left: 5px
+      display: none
+    ul.simple li:hover .component-desc
+      display: inline-block
+  .rst-current-version
+    font-size: 100%
+    padding: 13px 15px 8px
+    background: $dark-monaco
+
+
+/* Non-responsive tables (Default is responsive */
+.wy-table-responsive table.non-responsive td,
+.wy-table-responsive table.non-responsive th
+  white-space: normal !important
+
+
+footer
+  padding-top: 30px
+  hr
+    margin: 24px 0 24px 0
+  .info
+    display: inline-block
+  .logo-link
+    margin-bottom: 25px
+    margin-right: 5px
+    .boundless-logo
+      background: url("../img/boundless-logo-32.png") no-repeat
+      height: 32px
+      width: 32px
+      display: inline-block
+  .copyright
+    display: inline-block
+    vertical-align: top
+    padding-top: 6px
+    .normal-text
+      color: rgb(153, 153, 153)
+  .footer-aside
+    display: inline-block
+    float: right
+    padding-top: 6px
+
+#zenbox_container
+  height: 1000px
+  opacity: 0.99
+  position: relative
+  width: 1000px
+  z-index: inherit
+
+ul.search li img
+  width: auto !important

@@ -67,5 +67,21 @@ GeoExplorer allows you to publish your map view by generating a small block of H
 
 #. Copy and paste this code into any web page or HTML-source to embed your map.
 
+   To try this out create a file :file:`sample.html`:
+   
+   .. code-block:: html
+   
+      <html>
+      <head>
+         <title>GeoExplorer Sample</title>
+      </head>
+      <body>
+         <h1>Sample</h1>
+         <p>
+         Sample of an embedded GeoExplorer map.
+         </p>
+         <!-- iframe snippet goes here -->
+      </body>
+   
    .. note:: URLs that contain "localhost" will not be accessible to anyone other than those on the local machine. Please deploy the OpenGeo Suite onto a server with a web-accessible URL if you would like to share this map beyond your local system. The :ref:`sysadmin` section has more information about deployment.
 

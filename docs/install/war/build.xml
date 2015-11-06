@@ -1,0 +1,6 @@
+<project name="doc.install.war" default="build">
+
+  <property name="doc.name" value="war"/>
+  <import file="../common.xml"/>
+
+</project>

@@ -4,7 +4,7 @@
 
   <groupId>org.opengeo</groupId>
   <artifactId>shapegen</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>4.7-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>shapegen</name>
@@ -18,12 +18,12 @@
     <dependency>
      <groupId>org.geotools</groupId>
      <artifactId>gt-shapefile</artifactId>
-     <version>2.7-SNAPSHOT</version>
+     <version>13-SNAPSHOT</version>
     </dependency>
     <dependency>
      <groupId>org.geotools</groupId>
      <artifactId>gt-epsg-hsql</artifactId>
-     <version>2.7-SNAPSHOT</version>
+     <version>13-SNAPSHOT</version>
     </dependency>
     <dependency>
      <groupId>commons-io</groupId>

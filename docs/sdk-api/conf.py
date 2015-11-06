@@ -11,8 +11,10 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
-from xml.dom import minidom
+import sys, os, string
+sys.path.append('../../build'); from build_properties import *
+
+from datetime import date
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -23,10 +25,10 @@ from xml.dom import minidom
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = []
+extensions = ['sphinx.ext.intersphinx', 'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.autodoc', 'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+#templates_path = ['_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -38,20 +40,14 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'OpenGeo SDK API'
-copyright = u'OpenGeo'
+project = u'Boundless SDK API'
+copyright = str(date.today().year) + u' Boundless'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = minidom.parse(
-        "../pom.xml"
-    ).getElementsByTagName(
-        "parent"
-    )[0].getElementsByTagName(
-        "version"
-    )[0].firstChild.nodeValue
+version = suite_version
 
 # The full version, including alpha/beta/rc tags.
 release = version
@@ -96,24 +92,35 @@ pygments_style = 'sphinx'
 
 # -- Options for HTML output ---------------------------------------------------
 
+# The style sheet to use for HTML and HTML Help pages. A file of that name
+# must exist either in Sphinx' static/ path, or in one of the custom paths
+# given in html_static_path.
+html_style = 'css/theme.css'
+
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = 'opengeo'
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-#html_theme_options = {}
+html_theme = 'suite_rtd_theme'
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = ["../themes"]
 
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+html_theme_options = {
+  #'sticky_navigation' : True  # Set to False to disable the sticky nav while scrolling.
+  #'is_community': True, # Community Docs flag for Suite component docs
+  'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
+  'display_version': True,  # Whether to show version number
+  'suite_url': 'sdk-api' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
+}
+
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'OpenGeo SDK v%s' % (version,) 
+html_title = 'Boundless SDK v%s' % (version,)
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = "OpenGeo SDK"
+html_short_title = "Boundless SDK"
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -122,7 +129,7 @@ html_short_title = "OpenGeo SDK"
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-#html_favicon = None
+html_favicon = '../themes/suite_rtd_theme/static/img/boundlesssdk.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -145,10 +152,10 @@ html_short_title = "OpenGeo SDK"
 #html_additional_pages = {}
 
 # If false, no module index is generated.
-#html_use_modindex = True
+html_use_modindex = False
 
 # If false, no index is generated.
-#html_use_index = True
+html_use_index = False
 
 # If true, the index is split into individual pages for each letter.
 #html_split_index = False
@@ -182,8 +189,8 @@ htmlhelp_basename = 'SDKdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'SDK.tex', u'OpenGeo SDK Documentation',
-   u'OpenGeo', 'manual'),
+  ('index', 'BoundlessSDK.tex', u'Boundless SDK Documentation',
+   u'Boundless', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -202,3 +209,41 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+latex_preamble = """
+
+
+\\usepackage{ifthen}
+\\setlength\\fboxsep{0pt}
+\\setlength\\fboxrule{1pt}
+
+\\let\\OLDincludegraphics\\includegraphics
+\\newlength{\\somewidth}
+\\renewcommand{\\includegraphics}[1]{
+  \\settowidth{\\somewidth}{\\OLDincludegraphics{#1}}
+  \\ifthenelse{\\lengthtest{\\somewidth>4in}}{
+    \\shadowbox{\\OLDincludegraphics[width=4in]{#1}}}{
+    \\shadowbox{\\OLDincludegraphics{#1}}}
+}
+
+\\usepackage{float}
+
+\\let\\origfigure=\\figure
+\\renewenvironment{figure}[6]{
+  \\origfigure[H]}
+{\\endlist}
+
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+"""
+
+
+# Example configuration for intersphinx: refer to the Python standard library.
+intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {'http://suite.opengeo.org/opengeo-docs/geoexplorer/': None}
+intersphinx_mapping = {'http://suite.opengeo.org/opengeo-docs/geoserver/': None}
+intersphinx_mapping = {'http://suite.opengeo.org/opengeo-docs/geowebcache/': None}
+intersphinx_mapping = {'http://suite.opengeo.org/opengeo-docs/postgis/': None}
+intersphinx_mapping = {'http://suite.opengeo.org/opengeo-docs/sdk-api/': None}

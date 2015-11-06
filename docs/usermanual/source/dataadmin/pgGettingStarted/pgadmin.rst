@@ -6,12 +6,15 @@ Connecting to the PostgreSQL database with pgAdmin
 
 There are a number of front-end tools available for connecting to, and working with, the PostgreSQL database. Among the most popular are `psql <http://www.postgresql.org/docs/9.3/static/app-psql.html>`_, a command-line tool for querying the database, and the free and open source graphical tool `pgAdmin <http://www.pgadmin.org/>`_. 
 
-.. note:: Any data querying and manipulation you can do with ``pgAdmin`` can also be done at the command line with ``psql``.
+Any data querying and manipulation you can do with ``pgAdmin`` can also be done at the command line with ``psql``.
+
+.. note:: This section uses the graphical utility ``pgAdmin`` which may not be automatically present, depending on the type of installation of OpenGeo Suite. Please see the :ref:`intro.installation` section for information on how to install these tools for your platform.
+
 
 Launching pgAdmin
 -----------------
 
-Depending on how OpenGeo Suite was installed pgAdmin may or may not have been installed. See the :ref:`installation` section for installation instructions. Once installed follow the instructions below for your platform. 
+Depending on how OpenGeo Suite was installed pgAdmin may or may not have been installed. See the :ref:`intro.installation` section for installation instructions. Once installed follow the instructions below for your platform. 
 
 Windows
 ^^^^^^^
@@ -22,32 +25,32 @@ On Windows pgAdmin can be launched from the :guilabel:`Start Menu`.
 
    Launching pgAdmin on Windows
 
-Mac
-^^^
+Mac OS X
+^^^^^^^^
 
-On Mac the pgAdmin application is accessible from the installer image under :guilabel:`PostGIS Utilities`.
+On OS X, the pgAdmin application is accessible from the installer image under :guilabel:`PostGIS Utilities`.
 
 .. figure:: img/pgadmin_mac.png
 
-   Launching pgAdmin on Mac
+   Launching pgAdmin on OS X
 
 Linux
 ^^^^^
 
-On Linux pgAdmin can be launched from the terminal with the ``pgadmin3`` command.
+The pgAdmin application is installed via the ``pgadmin3`` package, and can be launched from the terminal with the ``pgadmin3`` command. On systems with graphical interfaces, ``pgAdmin III`` may be available from the Applications menu.
 
+.. note:: Some extra steps need to performed before pgAdmin will be available from both local and remote hosts. Please see the section on :ref:`dataadmin.pgGettingStarted.firstconnect` for configuration information.
 
 Working with pgAdmin
 --------------------
 
-As part of the installation of the OpenGeo Suite, you should have one pre-configured PostGIS server, localhost:5432, listed in the pgAdmin :guilabel:`Object browser`. 
+Depending on how you installed OpenGeo Suite, you may already have one pre-configured PostGIS server, ``localhost:5432``, listed in the pgAdmin :guilabel:`Object browser`.
 
 .. figure:: img/pgadmin_postgissrv.png
 
    PostGIS server in pgAdmin
 
 If you don't have an entry for PostGIS listed, add a new server connection manually. Click :menuselection:`File --> Add Server` and complete the :guilabel:`New Server Registation` dialog box to register a new server. Ensure the Host is set to **localhost** and Port is **5432** (unless you have configured PostgreSQL for a different port). 
-
 
 .. figure:: img/pgadmin_connectwindows.png
 

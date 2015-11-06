@@ -2,12 +2,12 @@
 <project name="suite-sdk" default="usage">
 
     <description>
-        Suite Client SDK
+        Boundless SDK
     </description>
 
     <target name="usage">
         <echo message=""/>
-        <echo message="Suite Client SDK Commands"/>
+        <echo message="Boundless SDK Commands"/>
         <echo message=""/>
         <echo message=" create     --&gt; create a new application"/>
         <echo message=" debug      --&gt; run an application in debug mode"/>
@@ -15,19 +15,21 @@
     </target>
 
     <property name="sdk.home" location="."/>
-    <property name="app.proxy.geoserver" value=""/>
+    <property name="app.proxy.geoserver" value="http://localhost:8080/geoserver"/>
     <property name="app.port" value="9080"/>
     <property name="suite.domain" value="localhost"/>
     <property name="suite.port" value="8080"/>
     <property name="suite.container" value="tomcat6x"/>
     <property name="suite.username" value="manager"/>
     <property name="suite.password" value="geoserver"/>
-    <property name="sdk.build" location="${app.warpath}/build"/>
+    <property name="sdk.build" location="${java.io.tmpdir}/suite-sdk/build"/>
+    <property name="sdk.war" location="${app.warpath}"/>
     <property name="sdk.logfile" location="${java.io.tmpdir}/suite-sdk/error.log"/>
+    <property name="app.template" value=""/>
     
     <target name="version">
         <property file="${sdk.home}/version.ini"/>
-        <echo message="Suite Client SDK ${suite_version} (${build_revision})"/>
+        <echo message="Boundless SDK ${suite_version} (${build_revision})"/>
     </target>
 
     <target name="checkpath">
@@ -67,11 +69,15 @@
     </target>
 
     <target name="create" depends="checkpath">
+        <condition property="app.template.exists">
+            <available file="${sdk.home}/src/main/resources/client/${app.template}" type="dir"/>
+        </condition>
         <fail message="Directory '${app.fullpath}' already exists.  Specify the name for a new app directory." if="app.exists"/>
+        <fail message="Template '${app.template}' is not available.  Specify the name of an existing template." unless="app.template.exists"/>
         <echo file="${sdk.logfile}" append="true" message="Creating application in '${app.fullpath}'.${line.separator}"/>
         <mkdir dir="${app.fullpath}"/>
         <copy todir="${app.fullpath}">
-            <fileset dir="${sdk.home}/src/main/resources/client"/>
+            <fileset dir="${sdk.home}/src/main/resources/client/${app.template}"/>
         </copy>
         <echo message="Created application: ${app.fullpath}"/>
     </target>
@@ -100,6 +106,12 @@
         <available file="${app.fullpath}/src/openlayers" property="use.openlayers"/>
         <available file="${app.fullpath}/src/geoext" property="use.geoext"/>
         <available file="${app.fullpath}/src/gxp" property="use.gxp"/>
+        <available file="${app.fullpath}/src/jquery" property="use.jquery"/>
+        <available file="${app.fullpath}/src/bootstrap" property="use.bootstrap"/>
+        <available file="${app.fullpath}/src/font-awesome" property="use.fa"/>
+        <available file="${app.fullpath}/src/bootbox" property="use.bootbox"/>
+        <available file="${app.fullpath}/src/ol3" property="use.ol3"/>
+        <available file="${app.fullpath}/src/css" property="use.css"/>
     </target>
 
     <target name="copy-app">
@@ -120,10 +132,58 @@
         </copy>
     </target>
 
+    <target name="copy-jquery" if="use.jquery">
+        <!-- copy jQuery resources -->
+        <copy todir="${app.build}/src/jquery">
+            <fileset dir="${app.fullpath}/src/jquery"/>
+        </copy>
+    </target>
+
+    <target name="copy-bootstrap" if="use.bootstrap">
+        <!-- copy bootstrap resources -->
+        <copy todir="${app.build}/src/bootstrap">
+            <fileset dir="${app.fullpath}/src/bootstrap"/>
+        </copy>
+    </target>
+
+    <target name="copy-bootbox" if="use.bootbox">
+        <!-- copy bootbox resources -->
+        <copy todir="${app.build}/src/bootbox">
+            <fileset dir="${app.fullpath}/src/bootbox"/>
+        </copy>
+    </target>
+
+    <target name="copy-fa" if="use.fa">
+        <!-- copy font-awesome resources -->
+        <copy todir="${app.build}/src/font-awesome">
+            <fileset dir="${app.fullpath}/src/font-awesome"/>
+        </copy>
+    </target>
+
+    <target name="copy-ol3" if="use.ol3">
+        <!-- copy ol3 resources -->
+        <copy todir="${app.build}/src/ol3">
+            <fileset dir="${app.fullpath}/src/ol3"/>
+        </copy>
+        <!-- copy ol3-cesium resources -->
+        <copy todir="${app.build}/src/ol3-cesium" failonerror="false">
+            <fileset dir="${app.fullpath}/src/ol3-cesium">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
     <target name="copy-openlayers" if="use.openlayers">
         <!-- copy OpenLayers resources -->
         <copy todir="${app.build}/src/openlayers/theme">
             <fileset dir="${app.fullpath}/src/openlayers/theme"/>
+        </copy>
+    </target>
+
+    <target name="copy-css" if="use.css">
+        <!-- copy css resources -->
+        <copy todir="${app.build}/src/css">
+            <fileset dir="${app.fullpath}/src/css"/>
         </copy>
     </target>
 
@@ -141,7 +201,7 @@
         </copy>
     </target>
 
-    <target name="build" depends="checkpath,copy-app,use-checks,copy-ext,copy-openlayers,copy-geoext,copy-gxp">
+    <target name="build" depends="checkpath,copy-app,use-checks,copy-ext,copy-openlayers,copy-geoext,copy-gxp,copy-jquery,copy-bootstrap,copy-fa,copy-bootbox,copy-ol3,copy-css">
         <fail message="Directory '${app.fullpath}' doesn't exist." unless="app.exists"/>
         <echo file="${sdk.logfile}" append="true" message="Building application resources for '${app.fullpath}'.${line.separator}"/>
         <!-- build app js -->
@@ -159,19 +219,28 @@
             <arg path="${app.fullpath}/buildjs.cfg"/>
         </java>
         <!-- copy additional app resources -->
-        <copy todir="${app.build}/theme">
+        <copy todir="${app.build}/theme" failonerror="false">
             <fileset dir="${app.fullpath}/theme"/>
         </copy>
         <copy todir="${app.build}">
             <fileset dir="${app.fullpath}">
-                <include name="*"/>
+                <include name="**/*"/>
+                <exclude name="src/**/*"/>
+                <exclude name="buildjs.cfg"/>
             </fileset>
         </copy>
+        <!-- replace debug versions with production versions -->
+        <replace file="${app.build}/index.html" token="ol-debug.js" value="ol.js"/>
+        <replace file="${app.build}/index.html" token="jquery.js" value="jquery.min.js"/>
+        <replace file="${app.build}/index.html" token="bootstrap.js" value="bootstrap.min.js"/>
+        <replace file="${app.build}/index.html" token="bootbox.js" value="bootbox.min.js"/>
+        <replace file="${app.build}/index.html" token="bootstrap.css" value="bootstrap.min.css"/>
+        <replace file="${app.build}/index.html" token="font-awesome.css" value="font-awesome.min.css"/>
     </target>
 
     <target name="package" depends="build">
         <echo file="${sdk.logfile}" append="true" message="Building application archive for '${app.fullpath}'.${line.separator}"/>
-        <war destfile="${sdk.build}/${app.name}.war" webxml="${sdk.build}/${app.name}/WEB-INF/web.xml">
+        <war destfile="${sdk.war}/${app.name}.war" webxml="${sdk.build}/${app.name}/WEB-INF/web.xml">
             <fileset dir="${sdk.build}/${app.name}"/>
         </war>
     </target>

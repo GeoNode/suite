@@ -1,0 +1,66 @@
+name: Default Styler
+title: Stacked Point
+abstract: Styles volcanoes using stacked points
+feature-styles:
+- name: name
+  transform:
+    name: vec:PointStacker
+    params:
+      cellSize: 30
+  rules:
+  - name: rule1
+    title: Volcano
+    filter: count <= '1'
+    symbolizers:
+    - point:
+        size: 8
+        symbols:
+        - mark:
+            shape: triangle
+            fill-color: '#FF0000'
+  - name: rule29
+    title: 2-9 Volcanoes
+    filter: count BETWEEN '2' AND '9'
+    symbolizers:
+    - point:
+        size: 14
+        symbols:
+        - mark:
+            shape: circle
+            fill-color: '#AA0000'
+    - text:
+        label: ${count}
+        fill-color: '#FFFFFF'
+        halo:
+          fill-color: '#AA0000'
+          fill-opacity: 0.9
+          radius: 2
+        font-family: Arial
+        font-size: 12
+        font-style: normal
+        font-weight: bold
+        placement: point
+        anchor: [0.5,0.8]
+  - name: rule10
+    title: 10 Volcanoes
+    filter: count > '9'
+    symbolizers:
+    - point:
+        size: 22
+        symbols:
+        - mark:
+            shape: circle
+            fill-color: '#AA0000'
+    - text:
+        label: ${count}
+        fill-color: '#FFFFFF'
+        halo:
+          fill-color: '#AA0000'
+          fill-opacity: 0.9
+          radius: 2
+        font-family: Arial
+        font-size: 12
+        font-style: normal
+        font-weight: bold
+        placement: point
+        anchor: [0.5,0.8]

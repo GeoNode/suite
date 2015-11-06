@@ -7,7 +7,7 @@
       <wps:Reference mimeType="text/xml; subtype=wfs-collection/1.0" xlink:href="http://geoserver/wps" method="POST">
         <wps:Body>
           <wps:Execute version="1.0.0" service="WPS">
-            <ows:Identifier>gs:Transform</ows:Identifier>
+            <ows:Identifier>vec:Transform</ows:Identifier>
             <wps:DataInputs>
               <wps:Input>
                 <ows:Identifier>features</ows:Identifier>

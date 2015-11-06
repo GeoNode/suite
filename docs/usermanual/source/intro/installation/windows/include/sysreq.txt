@@ -1,0 +1,18 @@
+System requirements
+-------------------
+
+The following Windows versions are supported:
+
+* Windows Vista
+* Windows 7
+* Windows 8
+* Windows Server 2008
+* Windows Server 2012
+
+OpenGeo Suite has the following system requirements:
+
+* Memory: 1GB minimum (2GB recommended)
+* Disk space: 1.2GB minimum (plus extra space for data)
+* Browser: Any modern web browser is supported
+* Permissions: Administrative rights
+* Software: .NET Framework 4 (`Download <http://www.microsoft.com/en-us/download/details.aspx?id=17851>`_)

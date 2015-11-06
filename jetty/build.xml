@@ -1,0 +1,28 @@
+<project name="jetty" default="build">
+
+    <import file="../build/common.xml"/>
+
+    <target name="clean" depends="destroy" description="Clean project">
+        <delete>
+            <fileset dir="lib" includes="*.jar"/>
+        </delete>
+        <delete file="start.jar" />
+    </target>
+
+    <target name="build" depends="init, retrieve"
+        description="Build project">
+         <move file="lib/jetty-start-${jetty.version}.jar"
+           tofile="${basedir}/start.jar"/>
+    </target>
+
+    <target name="assemble" description="Assembles project artifact">
+        <antcall target="assemble-artifact">
+            <param name="dir" value="${basedir}"/>
+            <param name="excludes" value="*.xml,target/**/*"/>
+        </antcall>
+    </target>
+
+    <target name="publish" description="Publishes project artifact"
+        depends="publish-artifact"/>
+
+</project>

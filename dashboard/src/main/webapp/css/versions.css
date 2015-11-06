@@ -1,0 +1,118 @@
+/* versions.css */
+
+html, body, .container-full {
+  height: 100%;
+  color: #333;
+}
+
+.versions-container {
+  margin-bottom: 80px;
+}
+.versions-container h2 {
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+h3.release-no {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.release-no small {
+  margin-left: 40px;
+}
+h4 a .doc-text {
+  color: #333;
+  padding-left: 5px;
+  font-size: 16px;
+}
+h4 a:hover {
+  text-decoration: none;
+}
+h4 a .accordion-btn {
+  padding: 5px 6px 4px 6px;
+  background-color: #28728d;
+  color: #fff;
+  font-size: 13px;
+}
+h4 a:hover .accordion-btn {
+  background-color: #00a78d;
+}
+
+/* accordion */
+
+.panel-group {
+  margin-left: 20px;
+}
+
+.panel-title {
+  line-height: 25px;
+  font-size: 18px;
+}
+.panel-title a:hover {
+  text-decoration: none;
+  color: #00a78d;
+}
+.panel .panel-default {
+  border-color: transparent;
+  margin-bottom: 10px;
+}
+.panel-default > .panel-heading {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.panel-group .accordion-icon {
+  background-color: #28728d;
+  background-image: url(../img/icon.png);
+  background-position: no-repeat;
+  background-position: 0 -27px;
+  display: block;
+  float: left;
+  height: 25px;
+  margin-right: 6px;
+  width: 25px;
+  opacity: 1;
+  -webkit-transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  transition: all 0.5s ease 0s;
+}
+.panel-group .collapsed .accordion-icon {
+  background-position: 0 0;
+}
+
+.panel-group a:hover .accordion-icon {
+  background-color: #00a78d;
+}
+
+.panel-body {
+  margin-left: 60px;
+  margin-bottom: 20px;
+}
+.panel-body h4 {
+  margin-top: 15px;
+  font-weight: bold;
+}
+.panel-body ul li {
+  line-height: 1.6em;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .panel-group {
+    margin-left: 0;
+  }
+  h3.release-no {
+    margin-left: 10px;
+  }
+  .panel-group .accordion-icon {
+    margin-right: 0;
+  }
+
+  .panel-body {
+    margin-left: 0px;
+  }
+  .panel-body h4 {
+    margin-left: 20px;
+  }
+
+}

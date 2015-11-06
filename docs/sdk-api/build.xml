@@ -1,0 +1,27 @@
+<project name="docs.sdk" default="build">
+
+    <import file="../common.xml"/>
+
+    <target name="destroy-sources">
+        <delete dir="src"/>
+    </target>
+
+    <target name="clean" depends="destroy-target, destroy-sources"/>
+
+    <target name="init-sources">
+        <mkdir dir="src"/>
+        <copy todir="src">
+          <fileset dir="${basedir}/../../geoexplorer/app/static/externals/gxp/" includes="**/*"/>
+        </copy>
+    </target>
+
+    <target name="build" depends="init, init-sources">
+        <ant dir="src" target="parsedocs"/>
+        <antcall target="sphinx">
+            <param name="dir" value="${basedir}"/>
+            <param name="srcdir" value="src/src/doc"/>
+            <param name="flags" value="-c ${basedir}"/>
+        </antcall>
+    </target>
+
+</project>

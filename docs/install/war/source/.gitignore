@@ -1,2 +1,3 @@
 # generated files
-index.rst
+*.rst
+img

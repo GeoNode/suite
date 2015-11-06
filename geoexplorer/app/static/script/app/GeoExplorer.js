@@ -93,6 +93,11 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
      *  ``String`` The relative url to the about page.
      */
     aboutUrl: "../about.html",
+
+    /** api: config[loadMapBaseUrl]
+     *  ``String`` The relative url for the loading of saved map config.
+     */
+    loadMapBaseUrl: "../",
     
     /**
      * private: property[mapPanel]
@@ -198,7 +203,7 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
         if (match) {
             this.id = Number(match[1]);
             Ext.Ajax.request({
-                url: "../" + mapUrl,
+                url: this.loadMapBaseUrl + mapUrl,
                 success: function(request) {
                     var addConfig = Ext.util.JSON.decode(request.responseText);
                     // Don't use persisted tool configurations from old maps

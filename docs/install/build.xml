@@ -1,43 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="install" default="build" basedir=".">
+<project name="docs.install" default="build">
 
-  <target name="build">
-    <property environment="env"/>
-    <condition property="pdflatex">
-      <or>
-        <available file="pdflatex" filepath="${env.PATH}"/>
-        <available file="pdflatex.exe" filepath="${env.Path}"/>
-        <available file="pdflatex.exe" filepath="${env.PATH}"/>
-      </or>
-    </condition>
-    <antcall target="html"/>
-    <antcall target="text"/>
-    <antcall target="pdf"/>
-  </target>
+    <import file="../common.xml"/>
 
-  <target name="html">
-     <exec executable="sphinx-build" failonerror="true" dir="${basedir}/source">
-       <arg line="${sphinx-flag} -D html_theme='opengeo' -b html -d ${build.directory}/doctrees . ${build.directory}/html"/>
-     </exec>
-  </target>
-  
-  <target name="text">
-     <exec executable="sphinx-build" failonerror="true" dir="${basedir}/source">
-       <arg line="${sphinx-flag} -b text -d ${build.directory}/doctrees . ${build.directory}/text "/>
-     </exec>
-  </target>
+    <property name="docs.install.modules" value="windows,mac,ubuntu,redhat,war"/>
 
-  <target name="pdf" depends="pdf-if,pdf-else"/>
-  <target name="pdf-if" if="pdflatex">
-     <exec executable="sphinx-build" failonerror="true" dir="${basedir}/source">
-       <arg line="${sphinx-flag} -b latex -d ${build.directory}/doctrees . ${build.directory}/latex"/>
-     </exec>
-     <exec executable="make" failonerror="true" dir="${build.directory}/latex">
-        <arg line="all-pdf"/>
-     </exec>
-  </target>
-  <target name="pdf-else" unless="pdflatex">
-      <echo message="No PDF generated because pdflatex is not on PATH.  This may make installer assembly fail."/>
-  </target>
+    <target name="clean" description="Clean project">
+        <for list="${docs.install.modules}" param="mod">
+            <sequential>
+                <ant dir="@{mod}" target="clean"/>
+            </sequential>
+        </for>
+    </target>
 
+    <target name="build" description="Build project">
+         <for list="${docs.install.modules}" param="mod">
+            <sequential>
+                <ant dir="@{mod}" target="build"/>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="assemble" depends="init"
+        description="Assemble project artifact">
+        <for list="${docs.install.modules}" param="mod">
+            <sequential>
+                <ant dir="@{mod}" target="assemble"/>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="publish"/>
 </project>

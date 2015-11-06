@@ -1,0 +1,22 @@
+<project name="docs.postgis" default="build">
+
+    <import file="../common.xml"/>
+
+    <property name="doc.dir" value="target/html/postgis"/>
+
+    <target name="build" depends="init">
+        <antcall target="sphinx">
+            <param name="dir" value="src"/>
+            <param name="flags" value="-q"/>
+        </antcall>
+
+        <get src="http://data.boundlessgeo.com/suite/postgis-docs-${pg.version}.zip" dest="doc.zip" 
+            usetimestamp="true"/>
+        <mkdir dir="${doc.dir}"/>
+        <unzip src="doc.zip" dest="${doc.dir}"/>
+        <copy file="style.css" todir="${doc.dir}/html" overwrite="true"/>
+    </target>
+
+    <target name="clean" depends="destroy"/>
+
+</project>

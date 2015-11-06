@@ -1,0 +1,53 @@
+name: roads
+title: Roads style
+feature-styles:
+- name: roads
+  x-firstMatch: true
+  rules:
+  - name: big
+    scale: [8000000,max]
+    filter: ${scalerank < 4}
+    symbolizers:
+    - line:
+        stroke-color: '#333333'
+        stroke-width: 1
+  - name: ferry
+    scale: [min,8000000]
+    filter: ${featurecla = 'Ferry'}
+    symbolizers:
+    - line:
+        stroke-color: '#00CCFF' 
+        stroke-width: 2
+        stroke-dasharray: '4 6'
+  - name: expressway
+    scale: [min,8000000]
+    filter: ${expressway = 1}
+    symbolizers:
+    - line:
+        stroke-color: '#000000'
+        stroke-width: 6
+        stroke-linecap: round
+  - name: medium
+    scale: [min,8000000]
+    filter: ${scalerank < 8}
+    symbolizers:
+    - line:
+        stroke-color: '#333333'
+        stroke-width: 1
+  - name: small
+    scale: [min,2000000]
+    else: true
+    symbolizers:
+    - line:
+        stroke-color: '#777777'
+        stroke-width: 0.5
+- name: inner
+  rules:
+  - name: expressway
+    scale: [min,8000000]
+    filter: ${expressway = 1}
+    symbolizers:
+    - line:
+        stroke-color: '#FFCC00'
+        stroke-width: 4
+        stroke-linecap: round

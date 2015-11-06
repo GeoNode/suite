@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+    <bean id="opengeoTheme" class="org.geoserver.web.HeaderContribution">
+        <property name="scope" value="com.boundlessgeo.geoserver.web.OpenGeoTheme"/>
+        <property name="CSSFilename" value="css/opengeo.css"/>
+        <property name="faviconFilename" value="favicon/favicon.ico"/>
+    </bean>
+    
+    <bean class="com.boundlessgeo.geoserver.catalog.UploadDeleteCatalogListener">
+      <constructor-arg ref="catalog"/>
+    </bean>
+    
+    <!-- configure thumbnail cache -->
+    <bean id="config" class="com.boundlessgeo.geoserver.AppConfiguration">
+      <constructor-arg ref="catalog"/>
+    </bean>
+    
+    <!-- configure FTL template loading path -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+      <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
+    </bean>
+    
+    <!-- configure ftl view resolver -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+      <property name="cache" value="true"/>
+      <property name="prefix" value=""/>
+      <property name="suffix" value=".ftl"/>
+    </bean>
+
+    <context:component-scan base-package="com.boundlessgeo.geoserver"/>
+
+    <mvc:interceptors>
+        <!-- intercept all /api/** routes and lock the catalog appropriately -->
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <bean class="com.boundlessgeo.geoserver.api.controllers.ConfigurationLockInterceptor" />
+        </mvc:interceptor>
+        <!-- intercept all /api/** routes and disable caching -->
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <bean class="org.springframework.web.servlet.mvc.WebContentInterceptor" >
+              <property name="cacheSeconds" value="0"/>
+              <property name="useExpiresHeader" value="true"/>
+              <property name="useCacheControlHeader" value="true"/>
+              <property name="useCacheControlNoStore" value="true"/>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.boundlessgeo.geoserver.api.converters.JSONMessageConverter"/>
+            <bean class="com.boundlessgeo.geoserver.api.converters.YsldMessageConverter"/>
+            <bean class="com.boundlessgeo.geoserver.api.converters.ResourceMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+</beans>
+

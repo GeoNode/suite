@@ -39,19 +39,11 @@ One powerful method of performing spatial processing is through the :term:`Web P
 
 Processes fall into three categories:  vector, raster, and geometry, referring to the type of geospatial content used as the process's input. These categories are broad, as processes can take multiple types of input.
 
-WPS is a `service published by GeoServer <../geoserver/extensions/wps/>`_ and so is an integral part of the OpenGeo Suite.  It provides a collection of many standard processes along with the ability to add additional ones.  These processes can be employed inside custom applications, built with the :ref:`Boundless SDK <webapps.sdk.dev>`, for a full web-based spatial processing solution.
+WPS is a `service published by GeoServer <../geoserver/extensions/wps/>`_ and so is an integral part of the OpenGeo Suite.  It provides a collection of many standard processes along with the ability to add additional ones.  These processes can be employed inside custom applications, built using the :ref:`Boundless SDK <webapps.sdk>`, for a full web-based spatial processing solution.
 
-For example, one can run the ``JTS:union`` process on a collection of geometries to output a single geometry that is the union of them.  Processes can be chained, so one can run the ``gs:Reproject`` process to reproject a raster image to a different SRS, then take the output of that and run ``gs:CropCoverage`` to crop the raster down to a certain bounds.  The result can be fed into the ``gs:Import`` process to save the resulting coverage as a new layer in GeoServer, for use by other clients.
+For example, one can run the ``geo:union`` process on a collection of geometries to output a single geometry that is the union of them.  Processes can be chained, so one can run the ``vec:Reproject`` process to reproject a raster image to a different SRS, then take the output of that and run ``ras:CropCoverage`` to crop the raster down to a certain bounds.  The result can be fed into the ``gs:Import`` process to save the resulting coverage as a new layer in GeoServer, for use by other clients.
 
 SQL Views
 ~~~~~~~~~
 
-Another way to perform spatial processing is by using the `SQL Views <../geoserver/data/database/sqlview.html>`_ functionality in GeoServer.  When backed by the powerful capabilities of a database such as PostGIS, SQL Views provide an effective way to transform and analyze spatial datasets.  Using a SQL View, a layer can be defined as the result of a spatial query on a PostGIS dataset.  This layer can then be visualized by WMS, queried via WFS, and even used in further processing operations.  Spatial queries in PostGIS support a wide variety of spatial processing, including data transformation, spatial analysis, and even raster processing (OpenGeo Suite 3.0 / PostGIS 2 and newer).
-
-
-.. Commented out until GeoScript is included.
-
-.. GeoScript
-.. ~~~~~~~~~
-..
-.. As an additional option, administrators can utilize basic processing functionality through GeoScript, a tool that adds spatial capabilities to scripting languages such as JavaScript and Python.  GeoScript facilitates a connection between these languages and the Java Virtual Machine where GeoServer runs, eliminating the need for coding processes directly in Java.
+Another way to perform spatial processing is by using the `SQL Views <../geoserver/data/database/sqlview.html>`_ functionality in GeoServer.  When backed by the powerful capabilities of a database such as PostGIS, SQL Views provide an effective way to transform and analyze spatial datasets.  Using a SQL View, a layer can be defined as the result of a spatial query on a PostGIS dataset.  This layer can then be visualized by WMS, queried via WFS, and even used in further processing operations.  Spatial queries in PostGIS support a wide variety of spatial processing, including data transformation, spatial analysis, and even raster processing.

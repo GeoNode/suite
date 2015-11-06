@@ -7,7 +7,7 @@ IntersectionFeatureCollection
 Description
 -----------
 
-The ``gs:IntersectionFeatureCollection`` process intersects two feature collections using spatial intersection and attribute combination.
+The ``vec:IntersectionFeatureCollection`` process intersects two feature collections using spatial intersection and attribute combination.
 
 The geometries in the feature collections can be intersected (``intersectionMode``) by a spatial intersection (``INTERSECTION``) or the output can use the original geometries from either inputs (``FIRST`` or ``SECOND``) without any spatial processing.
 
@@ -19,18 +19,19 @@ The names of the output attributes will be altered. The new attribute names will
 
 .. figure:: img/intersectionfc.png
 
-   *gs:IntersectionFeatureCollection*
+   *vec:IntersectionFeatureCollection*
 
 .. todo:: original text mentioned a 10 characters limitation in attribute names. This is only true for shapefiles, so should not be here but maybe in the page describing supported output formats.
 
 Inputs and outputs
 ------------------
 
-``gs:IntersectionFeatureCollection`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
+``vec:IntersectionFeatureCollection`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
 
 Inputs
 ~~~~~~
 
+.. tabularcolumns:: |p{4.5cm}|p{4.5cm}|p{4cm}|p{2cm}|
 .. list-table::
    :header-rows: 1
 
@@ -39,7 +40,7 @@ Inputs
      - Type
      - Usage
    * - ``first feature collection``
-     - First feature collection 
+     - First feature collection
      - :ref:`SimpleFeatureCollection <processing.processes.formats.fcin>`
      - Required
    * - ``second feature collection``
@@ -115,13 +116,13 @@ Input parameters:
 
 .. figure:: img/intersectionfcexampleUI.png
 
-   *gs:IntersectionFeatureCollection example #1 parameters*
+   *vec:IntersectionFeatureCollection example #1 parameters*
 
 The resulting schema contains all the attributes from the ``medford:streets`` feature collection, plus an attribute from the ``medford:parks`` collection, containing the name of the park crossed by the street section represented by that feature.
 
 .. figure:: img/intersectionfcexample.png
 
-   *gs:IntersectionFeatureCollection example #1 output*
+   *vec:IntersectionFeatureCollection example #1 output*
 
 .. note:: This example illustrates the problem mentioned above where attributes representing some properties of the default geometry are not updated when the geometry is modified. In particular, the ``length`` attribute from the ``medford:streets`` feature collection is preserved with its original values, even though this value is no longer correct in the resulting feature collection.
 
@@ -146,7 +147,7 @@ The resulting schema contains all the attributes from the ``world:volcanoes`` fe
 
 .. figure:: img/intersectionfcexampleUI2.png
 
-   *gs:IntersectionFeatureCollection example #2 parameters*
+   *vec:IntersectionFeatureCollection example #2 parameters*
 
 .. todo:: No graphic here because the process has a bug so output is not correct.
 
@@ -155,8 +156,8 @@ The resulting schema contains all the attributes from the ``world:volcanoes`` fe
 Related processes
 -----------------
 
-* Area calculation is a time consuming operation, so it may help to calculate the intersection in one process and the areas in another. The :ref:`gs:Transform <processing.processes.vector.transform>` process can perform area calculations using the ``area()`` function. The ``gs:Transform`` process has similar functions such as ``length()`` that can be used recompute  values that may be invalid following the intersection process.
-* The :ref:`gs:Clip <processing.processes.vector.clip>` process performs a similar operation with the geometries of the clipped area, and it can be used to produce similar results. However, ``gs:Clip`` only accepts as input a single feature collection along with a geometry. This means  there is only one set of attributes passed to the output without modification.
-* The :ref:`gs:UnionFeatureCollection <processing.processes.vector.unionfc>` process performs a union operation on two feature collections instead of an intersection.
+* Area calculation is a time consuming operation, so it may help to calculate the intersection in one process and the areas in another. The :ref:`vec:Transform <processing.processes.vector.transform>` process can perform area calculations using the ``area()`` function. The ``vec:Transform`` process has similar functions such as ``length()`` that can be used recompute  values that may be invalid following the intersection process.
+* The :ref:`vec:Clip <processing.processes.vector.clip>` process performs a similar operation with the geometries of the clipped area, and it can be used to produce similar results. However, ``vec:Clip`` only accepts as input a single feature collection along with a geometry. This means  there is only one set of attributes passed to the output without modification.
+* The :ref:`vec:UnionFeatureCollection <processing.processes.vector.unionfc>` process performs a union operation on two feature collections instead of an intersection.
 
 

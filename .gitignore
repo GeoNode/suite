@@ -1,19 +1,12 @@
-# general stuff
 .DS_Store
-
-# Maven artifacts
+*.pyc
+local.properties
 target/
-
-# Eclipse configuration
 .project
 .classpath
 .settings/
-
-# Jetty libs - used for building executable JAR
+workspace/
 jetty/lib
-
-# We should consider building all of the items below in a different way
-# so they don't need to be explicitly ignored here.
 /docs/install/linux/source/centos/
 /docs/install/linux/source/details.rst
 /docs/install/linux/source/index.rst
@@ -22,7 +15,7 @@ jetty/lib
 /docs/install/mac/source/img/
 /docs/install/windows/source/README-windows.rst
 /docs/install/windows/source/img/
-
 /geoserver/web/app/src/main/
-
 /data_dir
+geoserver/webapp/proxy.json
+/build_output.txt

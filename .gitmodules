@@ -12,16 +12,13 @@
 	url = git://github.com/boundlessgeo/geoserver-exts.git
 [submodule "geoserver/externals/geoscript/py"]
 	path = geoserver/externals/geoscript/py
-	url = git://github.com/jdeolive/geoscript-py.git
-[submodule "geoserver/externals/geoscript/js"]
-	path = geoserver/externals/geoscript/js
-	url = git://github.com/jdeolive/geoscript-js.git
+	url = git://github.com/geoscript/geoscript-py.git
 [submodule "geoexplorer/externals/buildkit"]
 	path = geoexplorer/externals/buildkit
 	url = git://github.com/boundlessgeo/buildkit.git
 [submodule "geoexplorer/app/static/externals/gxp"]
 	path = geoexplorer/app/static/externals/gxp
-	url = git://github.com/boundlessgeo/gxp.git
+	url = git://github.com/GeoNode/gxp.git
 [submodule "geoexplorer/app/static/externals/geoext"]
 	path = geoexplorer/app/static/externals/geoext
 	url = git://github.com/geoext/geoext.git
@@ -37,3 +34,12 @@
 [submodule "geoserver/data_dir/externals/suite-data"]
 	path = geoserver/data_dir/externals/suite-data
 	url = https://github.com/boundlessgeo/suite-data.git
+[submodule "geoserver/webapp/composer"]
+	path = geoserver/webapp/composer
+	url = git@github.com:boundlessgeo/composer.git
+[submodule "geoserver/externals/wps-gui"]
+	path = geoserver/externals/wps-gui
+	url = https://github.com/boundlessgeo/wps-gui.git
+[submodule "geoserver/externals/geomesa"]
+	path = geoserver/externals/geomesa
+	url = https://github.com/boundlessgeo/geomesa.git

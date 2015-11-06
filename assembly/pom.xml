@@ -8,7 +8,7 @@
  <parent>
    <groupId>org.opengeo</groupId>
    <artifactId>suite</artifactId>
-   <version>4-SNAPSHOT</version>
+   <version>4.7-SNAPSHOT</version>
  </parent>
 
  <groupId>org.opengeo</groupId>
@@ -18,11 +18,6 @@
 
  <dependencies>
    <!-- core geoserver extensions -->
-   <dependency>
-     <groupId>org.geoserver.extension</groupId>
-     <artifactId>gs-css</artifactId>
-     <version>${gs.version}</version>
-   </dependency>
    <dependency>
      <groupId>org.geoserver.community</groupId>
      <artifactId>gs-jdbcconfig</artifactId>
@@ -77,14 +72,25 @@
    </dependency>
    <dependency>
      <groupId>org.opengeo.geoserver</groupId>
+     <artifactId>cloudwatch</artifactId>
+     <version>${gs.version}</version>
+   </dependency>
+   <dependency>
+     <groupId>org.opengeo.geoserver</groupId>
      <artifactId>cluster</artifactId>
      <version>${gs.version}</version>
    </dependency>
    <dependency>
      <groupId>org.opengeo</groupId>
-     <artifactId>gt-mongodb</artifactId>
+     <artifactId>gs-mongodb</artifactId>
      <version>${gs.version}</version>
    </dependency>
+   <dependency>
+     <groupId>org.locationtech.geomesa</groupId>
+     <artifactId>plugin</artifactId>
+     <!--<version>${gs.version}</version>-->
+   </dependency>
+
    <!-- GeoPackage/MBTiles -->
    <dependency>
      <groupId>org.geoserver.community</groupId>

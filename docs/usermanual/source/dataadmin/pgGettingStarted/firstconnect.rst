@@ -3,6 +3,8 @@
 Connecting to PostgreSQL on Linux for the first time
 ====================================================
 
+.. note:: This section uses the command line utility ``psql`` and optionally the graphical utility ``pgAdmin``. These tools may not be automatically present, depending on the type of installation of OpenGeo Suite. Please see the :ref:`intro.installation` section for information on how to install these tools for your platform.
+
 On Windows and OS X, PostgreSQL is configured to be accessed immediately. No further configuration is required. The user name is ``postgres`` and password is ``postgres``.
 
 However, on Linux, both on Ubuntu and Red Hat-based systems, additional work needs to be undertaken. This is because the default PostgreSQL configuration on both Ubuntu and Red Hat-based systems has connections turned off for the ``postgres`` user by default.
@@ -52,19 +54,25 @@ The file :file:`pg_hba.conf` governs the basic constraints underlying connection
 
 To allow this:
 
-#. As a super user, open :file:`/etc/postgresql/9.3/main/pg_hba.conf` in a text editor.
+#. As a super user, open :file:`/etc/postgresql/9.3/main/pg_hba.conf` (Ubuntu) or :file:`/var/lib/pgsql/9.3/data/pg_hba.conf` (Red Hat) in a text editor.
 
-#. Scroll down to the line that desribes local connections. It may look like this:
+#. Scroll down to the line that describes local socket connections. It may look like this:
 
    .. code-block:: console
 
-      local   all             postgres                                peer
-
-   .. note:: Many of the lines here look similar, so be sure you are editing the correct line (it will say ``postgres``).
+      local   all             all                                      peer
 
 #. Change the ``peer`` method to ``md5``.
 
    .. note:: For more information on the various options, please see the `PostgreSQL documentation on pg_hba.conf <http://www.postgresql.org/docs/devel/static/auth-pg-hba-conf.html>`_. 
+
+#. To allow connections using pgAdmin, find the line that describes local loopback connections over IPv6:
+
+   .. code-block:: console
+
+      host    all             all             ::1/128                 ident
+
+#. Change the ``ident`` method to ``md5``.
 
 #. Save and close the file.
 
@@ -88,4 +96,53 @@ To allow this:
 
       Testing the connection in pgAdmin
 
-If you encounter errors, make sure that the ``postgres`` password is set correctly, and that the correct line was edited in :file:`pg_hba.conf`.
+If you encounter errors, make sure that the ``postgres`` password is set correctly, and that the correct line was edited in :file:`pg_hba.conf`, as many look alike.
+
+Allowing remote connections
+---------------------------
+
+Often the system running ``psql`` will be different from the system running the database. This is especially true if you want to run **pgAdmin** from your system.
+
+In order to allow connections from remote systems, some slightly different configuration will be necessary.
+
+The details are similar to that of allowing local connections, with some slight differences.
+
+#. As a super user, open :file:`/etc/postgresql/9.3/main/pg_hba.conf` (Ubuntu) or :file:`/var/lib/pgsql/9.3/data/pg_hba.conf` (Red Hat) in a text editor.
+
+#. Scroll down to the line that describes local socket connections. It may look like this:
+
+   .. code-block:: console
+
+      local   all             all                                      peer
+
+#. Change to:
+
+   .. code-block:: console
+
+      host    all             all             0.0.0.0/0               trust
+
+   .. warning:: This is a potential security risk, and you may wish to customize this further. For more information on the various options, please see the `PostgreSQL documentation on pg_hba.conf <http://www.postgresql.org/docs/devel/static/auth-pg-hba-conf.html>`_. 
+
+#. Save and close the file.
+
+#. In the same directory, open :file:`postgresql.conf`.
+
+#. Under the section on :guilabel:`Connection Settings`, add or replace the line that starts with ``listen_addresses`` to respond to all requests:
+
+   .. code-block:: console
+
+      listen_addresses = '*'
+
+   .. note:: Make sure the line is uncommented.
+
+#. Save and close the file.
+
+#. Restart PostgreSQL:
+
+   .. code-block:: console
+
+      sudo service postgresql restart  
+
+#. To test your connection using **pgAdmin**, connect to the database at the IP address or host name of the system that hosts the database. Enter the user name ``postgres`` and the password supplied.
+
+   .. note:: Make sure that port 5432 is open on this system.

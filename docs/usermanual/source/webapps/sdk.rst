@@ -3,71 +3,64 @@
 Creating and deploying apps with Boundless SDK
 ==============================================
 
-Boundless SDK provides tools for building web mapping applications backed by OpenGeo Suite. The application development life-cycle are as follows:
+Boundless SDK provides tools for building JavaScript-based web mapping applications backed by OpenGeo Suite. The application development life-cycle is as follows:
 
 #. **Creation** - Generating a new template application
-#. **Customization** - Adding features and functionality to the template application
-#. **Testing** - Deploying the application in a test mode to verify functionality and debug
+#. **Customization** - Adding features and functionality to the application
+#. **Testing** - Deploying the application in a test mode to verify functionality and troubleshoot
+#. **Packaging** - Creating a web archive that be deployed on any application server
 #. **Deployment** - Deploying the application in a production environment
-
-This tutorial will discuss creating, testing, and deploying of an application. See the tutorial :ref:`webapps.sdk.dev` for information on customizing your application.
-
-Prerequisites:
-
-* Boundless SDK installed. See the next section for installation details.
-
-* A `Java Development Kit (JDK) <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_. A standard Java Runtime Environment (JRE) is not sufficient.
-
-* `Apache Ant <http://ant.apache.org>`_ installed and on the ``PATH``. To verify this, type ``ant -version`` at a terminal prompt.
-
-.. _webapps.sdk.install:
-
-Installation
-------------
-
-The Boundless SDK can be installed in one of two ways. The first is as part of a regular OpenGeo Suite install. See the :ref:`installation` section for details.
-
-The second method involves installing the SDK standalone:
-
-#. Download the Boundless SDK from http://boundlessgeo.com/solutions/solutions-software/software/. 
-
-#. Extract the archive to a suitable location on the file system.
-
-#. Ensure the SDK :file:`bin` is on the ``PATH``. 
-
-To verify the SDK is installed properly execute the command ``suite-sdk`` from 
-a command prompt.
-
 
 .. _webapps.sdk.create:
 
 Creating a new application
 --------------------------
 
-The Boundless SDK comes with an application template that can be useful for getting started developing with the Suite. To create a new application based on this template, run the ``suite-sdk create`` command::
+The Boundless SDK comes with three application templates:
 
-  suite-sdk create path/to/myapp
+* ``gxp`` - A template based on GXP, GeoExt, and OpenLayers 2
+* ``ol3view`` - A template for viewing, based on OpenLayers 3 and Bootstrap 
+* ``ol3edit`` - A template for editing, based on OpenLayers 3 and Bootstrap
 
-In the above command, the app will be called :file:`myapp` and will be placed in the :file:`path/to/myapp` directory. This directory will contain all required client-side resources for your application.
+.. todo:: Need to say more about these.
 
-.. warning:: Be sure to not name your application :file:`geoserver`, :file:`geoexplorer`, :file:`manager`, or any other name that might cause a conflict when :ref:`webapps.sdk.deploy`.
+To create a new application based on this template, run the ``suite-sdk create`` command::
+
+  suite-sdk create path/to/myapp template
+
+In the above command, the application will be called :file:`myapp` and will be placed in the :file:`path/to/myapp` directory. The ``template`` to be used must be one of the three listed above (``gxp``, ``ol3view``, ``ol3edit``).
+
+.. warning:: Be sure to not name your application :file:`geoserver`, :file:`geoexplorer`, :file:`manager`, :file:`docs`, or any other name that might cause a conflict when deploying your application.
+
+
+.. _webapps.sdk.customize:
+
+Customizing the application
+---------------------------
+
+The method of customizing the application depends on which template is used.
+
+* If using the ``gxp`` template, please see the section on :ref:`webapps.gxp`.
+* If using the ``ol3view`` or ``ol3edit`` templates, please see the section on :ref:`webapps.ol3.templates`.
 
 .. _webapps.sdk.debug:
 
 Testing the application
 -----------------------
 
-The Boundless SDK comes with a server that can be used to debug your application during development. The server loads all of your JavaScript as individual, unminified scripts - very useful for debugging in a browser, but not suitable for production.
+Boundless SDK comes with a server that can be used to debug your application during development. The server loads all of your code as individual, uncompressed scripts, useful for debugging in a browser.
 
 Run the following command to launch a server that loads the application in "debug mode"::
 
   suite-sdk debug path/to/myapp
 
-This server will publish the app at ``http://localhost:9080/`` . Open this URL in a browser to see your application.
+This server will publish the :file:`myapp` application at ``http://localhost:9080/`` . Navigate to this URL to view and test your application.
 
-In debug mode, all JavaScript resources are loaded uncompressed to make for easy debugging in the browser.
+.. todo:: Add image.
 
-Typing :command:`Ctrl-C` in the terminal window will shut down the server.
+.. note::  Type ``suite-sdk debug --help`` to see a full list of possible arguments.
+
+Press :command:`Ctrl-C` in the terminal window to shut down the server.
 
 Changing the port
 ~~~~~~~~~~~~~~~~~
@@ -81,58 +74,80 @@ This will make your application available for debugging at ``http://localhost:80
 Accessing GeoServer while testing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When deploying the application in OpenGeo Suite, the application will have access to GeoServer at the relative URL of :file:`/geoserver`. If a GeoServer is not available on that path, or to set up this relationship with a remote GeoServer while testing your application, you can proxy a remote GeoServer to make it look as if it were available locally. To proxy a GeoServer located at ``http://example.com:8080/geoserver``, run the following command::
+Applications built with Boundless SDK are designed to be deployed in the same application server as OpenGeo Suite. So these applications will expect to have GeoServer accessible at the relative URL of :file:`/geoserver`.
 
-  suite-sdk debug -g http://example.com:8080/geoserver path/to/myapp 
+While testing locally, you may need to set up a proxy to a remote GeoServer to make it look as if it were available locally as well. To do this, provide the ``-g <URL>`` option::
 
-This will make your remote GeoServer available locally to your application at the relative URL of :file:`/geoserver`.
+  suite-sdk debug -g http://example.com/geoserver path/to/myapp 
 
-Note that the ``-l`` and ``-g`` options can be used together. For example, you could debug your application on port 8000 while accessing a local GeoServer running on port 8080::
+This will make the GeoServer located at ``http://example.com/geoserver`` available locally to your application at the relative URL of ``http://localhost:9080/geoserver``.
 
-  suite-sdk debug -l 8000 -g http://localhost:8080/geoserver path/to/myapp 
+.. note:: 
 
-Again, this would make your application available at ``http://localhost:8000/`` while making GeoServer available on the same port at ``http://localhost:8000/geoserver``.
+   **New in version 4.1**: Since GeoServer is commonly located at ``http://localhost:8080/geoserver``, if the ``-g`` option is not provided, the SDK will automatically check that location to see if a GeoServer is present. If a GeoServer is found, it will be automatically proxied to http://localhost:9080/geoserver.
 
-The debug server and proxy are suitable for debugging purposes only. Use the ``suite-sdk deploy`` command to prepare your application for production.
+.. note::
+
+   The port and proxy options can both be used in the same command.
+
+The testing server and proxy are suitable for debugging purposes only. Use the ``suite-sdk deploy`` command to prepare your application for production.
+
+
+.. _webapps.sdk.package:
+
+Packaging the application
+-------------------------
+
+After the applications is completed, the next step is to package it.
+
+Packaging the application is the process of creating a web archive (WAR) that can be deployed to any application server, such as the one hosting OpenGeo Suite web applications. This process will concatenate and compress ("minify") all JavaScript resources and then create a WAR.
+
+To package your application, run the following command::
+
+  suite-sdk package /path/to/myapp /path/to/destination
+
+.. note::  Type ``suite-sdk package --help`` to see a full list of possible arguments.
+
+The above command will package the :file:`myapp` application found at :file:`/path/to/myapp` and create a :file:`myapp.war` file at :file:`/path/to/destination`. Leaving the destination option blank will cause the WAR file to be created in the current directory.
+
 
 .. _webapps.sdk.deploy:
 
 Deploying the application
 -------------------------
 
-Deploying your application is the process of publishing an application on an OpenGeo Suite instance. This process will concatenate and minify all JavaScript resources, and then copy them to a remote OpenGeo Suite.
+Once the WAR file is created, it can be manually deployed to your application server.
 
-To deploy your application to your (remote) OpenGeo Suite instance, run the following command::
+Windows
+~~~~~~~
 
-  suite-sdk deploy -d example.com -r 8080 -u <username> -p <password> -c <container> path/to/myapp
+To deploy to OpenGeo Suite for Windows, copy the WAR file to :file:`<OPENGEO_SUITE>\\jetty\\webapps`. For example, if OpenGeo Suite is installed at :file:`C:\\Program Files\\Boundless\\OpenGeo\\`, copy the WAR file to :file:`C:\\Program Files\\Boundless\\OpenGeo\\jetty\\webapps\\`
 
-.. note::  Type ``suite-sdk deploy --help`` without any arguments to see a full list of possible arguments.
+The WAR file should automatically extract to its own directory, but if it doesn't, you can manually extract the file using a standard "unzip" program such as `7-zip <http://www.7-zip.org/>`_.
 
-The above command assumes your Suite instance is available at ``http://example.com:8080/``. Using the ``-u`` and ``p`` options supplies the :ref:`remote manager credentials <webapps.sdk.remotedeploy>` for the remote OpenGeo Suite.
+OS X
+~~~~
 
-The container type also needs to be supplied by the ``-c`` flag (default is ``tomcat6x``). See the following table for the default containers for the various installation types.
+To deploy to OpenGeo Suite for OS X, copy the WAR file to::
 
-.. list-table::
-   :header-rows: 1
+  ~/Library/Application\ Support/GeoServer/jetty/webapps
 
-   * - Installation type
-     - Container used
-     - Syntax
-   * - Ubuntu
-     - Tomcat 6
-     - ``-c tomcat6x``
-   * - Red Hat / CentOS 5
-     - Tomcat 5
-     - ``-c tomcat5x``
-   * - Red Hat / CentOS 6
-     - Tomcat 6
-     - ``-c tomcat6x``
-   * - Windows installer
-     - Jetty 6
-     - ``-c jetty7x``
-   * - Mac OS X installer
-     - Jetty 6
-     - ``-c jetty7x``
+The WAR file should automatically extract to its own directory, but if it doesn't, you can manually extract the file using a standard "unzip" program such as `iZip <http://www.izip.com/>`_.
 
-For a full list of supported containers and their deployment syntax, please see http://cargo.codehaus.org .
+Linux
+~~~~~
 
+To deploy to OpenGeo Suite for Linux (either Ubuntu or any Red Hat-based Linux), and assuming an application named :file:`myapp`:
+
+#. Extract :file:`myapp.war` to :file:`/usr/share/opengeo/myapp`.
+
+#. Create a file called :file:`myapp.xml` in :file:`/etc/tomcat7/Catalina/localhost/` with the following content::
+
+     <Context displayName="myapp" docBase="/usr/share/opengeo/myapp" path="/myapp"/>
+
+#. Save this file and restart Tomcat.
+
+Application Servers
+~~~~~~~~~~~~~~~~~~~
+
+To deploy to OpenGeo Suite for Application Servers, please see the documentation for your application server.

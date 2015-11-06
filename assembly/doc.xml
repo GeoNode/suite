@@ -22,6 +22,14 @@
       <outputDirectory>postgis</outputDirectory>
     </fileSet>
     <fileSet>
+      <directory>docs/openlayers/target/html</directory>
+      <outputDirectory>openlayers</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>docs/qgis/target/html</directory>
+      <outputDirectory>qgis</outputDirectory>
+    </fileSet>
+    <fileSet>
       <directory>docs/geowebcache/target/html</directory>
       <outputDirectory>geowebcache</outputDirectory>
     </fileSet>

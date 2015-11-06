@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+    <info organisation="com.boundlessgeo.suite" module="geowebcache"/>
+    <dependencies>
+        <dependency org="org.geowebcache" name="geowebcache" rev="${gwc.version}" >
+          <artifact name="geowebcache" type="war"/>
+        </dependency>
+    </dependencies>
+</ivy-module>

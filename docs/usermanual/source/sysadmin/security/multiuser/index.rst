@@ -289,7 +289,7 @@ The Web Processing Service (WPS) can impose a strong performance penalty if left
 
 #. Fill out the form with the following information:
 
-   * In the :guilabel:`Service` box, select :guilabel:`wfs`.
+   * In the :guilabel:`Service` box, select :guilabel:`wps`.
    * In the :guilabel:`Method` box, select :guilabel:`* (asterisk)`.
    * in the :guilabel:`Roles` section, click :guilabel:`ADMIN` and then click the right-arrow to move the role to the :guilabel:`Selected` box.
 
@@ -302,6 +302,8 @@ The Web Processing Service (WPS) can impose a strong performance penalty if left
    .. figure:: img/servicerules.png
 
       Complete list of service access rules
+
+.. note:: WPS processes can be restricted by roles on a per-process or per-process group basis. See the section on :ref:`sysadmin.security.wps` for more details.
 
 7. Restrict REST access except for the administrator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

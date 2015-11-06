@@ -24,7 +24,7 @@ if "%~1"=="version" goto Version
 if "%~1"=="--version" goto Version
 if "%~1"=="create" goto Create
 if "%~1"=="debug" goto Debug
-if "%~1"=="deploy" goto Deploy
+if "%~1"=="package" goto Package
 goto Usage
 
 :lastarg
@@ -45,11 +45,14 @@ goto :eof
 set COMMAND="version"
 goto Run
 
+
 :Create
-:: Create takes no arguments
+:: Create takes only two arguments, all required
 if "x%~2"=="x" goto Usage
 if "%~2"=="-h" goto UsageCreate
 if "%~2"=="--help" goto UsageCreate
+if "x%~3"=="x" goto UsageCreate
+if "x%~4" NEQ "x" goto UsageCreate
 
 :: Determine if there are "extra" flags
 call :lastarg %*
@@ -63,16 +66,11 @@ if "%LAST_ARG:~0,1%"=="-" (
   goto UsageCreate
 )
 
-:: Make sure there are no trailing args
-call :argcount %*
 set COMMAND="%~1"
 set APP_PATH="%~2"
-if "%argC%"=="2" (
-  set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH%
-  goto Run
-) else (
-    goto UsageCreate
-)
+set APP_TEMPLATE="%~3"
+set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH% -Dapp.template=%APP_TEMPLATE%
+goto Run
 
 
 :Debug
@@ -154,98 +152,21 @@ set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH%
 goto Run
 
 
-:Deploy
+:Package
 if "x%~2"=="x" goto Usage
-if "%~2"=="-h" goto UsageDeploy
-if "%~2"=="--help" goto UsageDeploy
-
-:: Determine if there are "extra" flags
-call :lastarg %*
-:: If the second to last or last argument starts with a -, dump to usage
-if "%PREV_ARG:~0,1%"=="-" (
-  echo Invalid argument: %PREV_ARG%
-  goto UsageDeploy
+if "%~2"=="-h" goto UsagePackage
+if "%~2"=="--help" goto UsagePackage
+if "x%~3"=="x" (
+  :: build-path omitted, using current directory
+  set WAR_PATH="%CD%"
+) else (
+  set WAR_PATH="%~3"
 )
-if "%LAST_ARG:~0,1%"=="-" (
-  echo Invalid argument: %LAST_ARG%
-  goto UsageDeploy
-)
+if "x%~4" NEQ "x" goto UsagePackage
 
 set COMMAND="%~1"
-shift
-
-
-:DeployFlagLoop
-set ARG=%~1
-
-:: Checking for a valid flag
-set flag=0
-if "%~1"=="-d" set flag=d
-if "%~1"=="--domain" set flag=d
-if "%~1"=="-r" set flag=r
-if "%~1"=="--remote-port" set flag=r
-if "%~1"=="-u" set flag=u
-if "%~1"=="--username" set flag=u
-if "%~1"=="-p" set flag=p
-if "%~1"=="--password" set flag=p
-if "%~1"=="-c" set flag=c
-if "%~1"=="--container" set flag=c
-if "%flag%"=="0" (
-  :: Make sure we don't have an invalid flag
-  if "%ARG:~0,1%"=="-" (
-    echo Invalid Argument: %ARG%
-    goto UsageDeploy
-  )
-  :: Must be one arg remaining, otherwise fail
-  if "%~1"=="%LAST_ARG%" (
-    goto DeployPath
-  ) else (
-    goto UsageDeploy
-  )
-)
-
-
-:: TODO Figure out which of these are required!
-
-if "%flag%"=="d" (
-  if "x%~2"=="x" goto Usage
-  set ANT_ARGS=%ANT_ARGS% -Dsuite.domain=%2
-  shift && shift
-)
-
-if "%flag%"=="r" (
-  if "x%~2"=="x" goto Usage
-  set ANT_ARGS=%ANT_ARGS% -Dsuite.port=%2
-  shift && shift
-)
-
-if "%flag%"=="u" (
-  if "x%~2"=="x" goto Usage
-  set ANT_ARGS=%ANT_ARGS% -Dsuite.username=%2
-  shift && shift
-)
-
-if "%flag%"=="p" (
-  if "x%~2"=="x" goto Usage
-  set ANT_ARGS=%ANT_ARGS% -Dsuite.password=%2
-  shift && shift
-)
-
-if "%flag%"=="c" (
-  if "x%~2"=="x" goto Usage
-  set ANT_ARGS=%ANT_ARGS% -Dsuite.container=%2
-  shift && shift
-)
-
-
-:: Keep going until one arg left
-goto DeployFlagLoop
-
-:DeployPath
-:: First argument is not a flag, so must assume that
-:: it's the app-path.
-set APP_PATH="%~1"
-set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH%
+set APP_PATH="%~2"
+set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH% -Dapp.warpath=%WAR_PATH%
 goto Run
 
 
@@ -255,73 +176,55 @@ echo.
 echo List of commands:
 echo     create      Create a new application.
 echo     debug       Run an existing application in debug mode.
-echo     deploy      Deploy an application to a remote OpenGeo Suite instance.
-echo.    
+echo     package     Create a WAR file.
+echo.
 echo See '%NAME% ^<command^> --help' for more detail on a specific command.
 echo.
 exit /b
 
 :UsageCreate
-echo Usage: %NAME% create ^<app-path^>
+echo Usage: %NAME% create ^<app-path^> ^<app-template^>
 echo.
-echo Create a new application.  A new directory will be created using the ^<app-path^> 
-echo argument (it must not already exist).
+echo Create a new application. A new directory will be created using the ^<app-path^> 
+echo argument (it must not already exist). Possible values for ^<app-template^> are:
+echo.
+echo     gxp        a template based on GXP, GeoExt and OpenLayers 2
+echo     ol3view    a template based on OpenLayers 3 and bootstrap for viewing
+echo     ol3edit    a template based on OpenLayers 3 and bootstrap for editing
 echo.
 exit /b
 
 :UsageDebug
 echo Usage: %NAME% debug [^<options^>] ^<app-path^>
 echo.
-echo Debug an existing application.  The ^<app-path^> argument must be the path to an
+echo Debug an existing application. The ^<app-path^> argument must be the path to an
 echo existing application.
 echo.
 echo List of options:
 echo.
-echo     -l ^| --local-port   port    Port for the local debug server.  Default is 
+echo     -l ^| --local-port   port    Port for the local debug server. Default is 
 echo                                 9080.
 echo.
-echo     -g ^| --geoserver    url     URL for a remote GeoServer to proxy.  The debug
+echo     -g ^| --geoserver    url     URL for a remote GeoServer to proxy. The debug
 echo                                 server will make the remote GeoServer available
 echo                                 from the "/geoserver" path within the 
 echo                                 application.
 echo.
 exit /b
 
-:UsageDeploy
-echo Usage: %NAME% deploy ^<options^> ^<app-path^>
+:UsagePackage
+echo Usage: %NAME% package ^<app-path^> ^<build-path^>
 echo.
-echo Deploy an existing application.  The ^<app-path^> argument must be the path to an
-echo existing application.
-echo.
-echo List of options:
-echo.
-echo     -d ^| --domain       name    Domain name for remote Suite container (for 
-echo                                 example: yourdomain.com).  The domain name does
-echo                                 not include the protocol (e.g. http), port, or
-echo                                 any other part of the URL.  Domain must be 
-echo                                 provided to deploy an app.
-echo.
-echo     -r ^| --remote-port  port    Port for the remote Suite container.  Default is
-echo                                 8080.
-echo.
-echo     -u ^| --username     user    Username for manager of remote Suite container.
-echo                                 Username must be provided to deploy an app.
-echo.
-echo     -p ^| --password     secret  Password for manager of remote Suite container.
-echo                                 Password must be provided to deploy an app.
-echo.
-echo     -c ^| --container    type    Identifier for remote Suite container.  Default
-echo                                 is "tomcat6x".  Possible values include 
-echo                                 "jetty6x", "jboss7x", "weblogic9x".  See
-echo                                 http://cargo.codehaus.org/ for details on
-echo                                 supported containers.
+echo Package an existing application. The ^<app-path^> argument must be the path to an
+echo existing application. The ^<build-path^> is the location where the WAR file package
+echo will be created.
 echo.
 exit /b
 
 
 :Run
 :: Create log files (in case they don't already exist)
-set LOG_DIR=%USERPROFILE%\.opengeo\logs
+set LOG_DIR=%TEMP%\suite-sdk
 set LOG_FILE=%LOG_DIR%\suite-sdk.log
 set ANT_LOG=%LOG_DIR%\ant.log
 
@@ -349,9 +252,9 @@ if %COMMAND%=="debug" (
   echo Starting debug server for application ^(use CTRL+C to stop^)
   echo.
 )
-if %COMMAND%=="deploy" (
+if %COMMAND%=="package" (
   echo.
-  echo Deploying application ^(this may take a few moments^) ...
+  echo Packaging application ^(this may take a few moments^) ...
   echo.
 )
 
@@ -364,10 +267,14 @@ IF %ERRORLEVEL% NEQ 0 (
     echo The '%NAME% create' command failed.
     echo.
     echo A common cause of this is the failure to create the provided directory:
-    echo %APP_PATH%
+    echo %APP_PATH%. Please ensure that the directory name is valid and that you
+    echo have permission to create this directory.
     echo.
-    echo Please ensure that the directory name is valid and that you have permission
-    echo to create this directory.  Run '%NAME% create --help' for help on the usage.
+    echo Another common cause is that the ^<app-template^> value is invalid
+    echo ^(should be one of: gxp, ol3view or ol3edit^). Option specified was: 
+    echo %APP_TEMPLATE%
+    echo.
+    echo Please run '%NAME% create --help' for help on the usage.
     echo.
   )
   if %COMMAND%=="debug" (
@@ -381,13 +288,15 @@ IF %ERRORLEVEL% NEQ 0 (
     echo Please run '%NAME% debug --help' for help on the usage.
     echo.
   )
-  if %COMMAND%=="deploy" (
+  if %COMMAND%=="package" (
     echo.
-    echo The '%NAME% deploy' command failed.
+    echo The '%NAME% package' command failed.
     echo.
-    echo Common causes for this are misconfiguration of the container type ^(-c^) or
-    echo improper credentials ^(-u and -p^) for your remote Suite instance.  Run
-    echo '%NAME% deploy --help' for help on the usage.
+    echo Two commmon causes of this are:
+    echo * The ^<app-path^> directory does not contain a valid application: %APP_PATH%
+    echo * The ^<build-path^> directory must be valid and writeable: %WAR_PATH%
+    echo.
+    echo Please run '%NAME% package --help' for help on the usage.
     echo.
   )
   echo See the logfile '%LOG_FILE%' for more detail on what went wrong.

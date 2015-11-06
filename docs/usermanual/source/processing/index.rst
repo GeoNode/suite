@@ -10,8 +10,10 @@ This section will discuss spatial processing and analysis tools using OpenGeo Su
    :maxdepth: 2
 
    intro
+   wpsbuilder/index
    wpsjava/index
    wpsclient/index
    scripting/index
    contour/index
+   management/index
    processes/index

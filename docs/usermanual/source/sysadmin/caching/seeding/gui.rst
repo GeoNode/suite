@@ -29,6 +29,7 @@ To seed a tile cache for a given layer:
 
 #. Fill out the form titled :guilabel:`Create a new task`.
 
+   .. tabularcolumns:: |p{5cm}|p{10cm}|
    .. list-table::
       :header-rows: 1
 
@@ -53,7 +54,7 @@ To seed a tile cache for a given layer:
 
       *Seeding form*
 
-#. When the form is filled out, click :guilabel:`Submit`. The seed task will start. The page will show the task's status, including estimated time remaining. Click the :guilabel:`Refresh list` button to update the view. 
+#. When the form is filled out, click :guilabel:`Submit`. The seed task will start. The page will show the task's status, including estimated time remaining. Click the :guilabel:`Refresh list` button to update the view.
 
    .. figure:: img/gui_status.png
 

@@ -11,7 +11,6 @@
         <include>*gt-imageio-ext-gdal*.jar</include>
         <include>*gt-ogr-*.jar</include>
         <include>*imageio-ext-gdal*.jar</include>
-        <include>*imageio-ext-geocore*.jar</include>
         <include>*imageio-ext-imagereadmt*.jar</include>
         <include>gdal-*.jar</include>
       </includes>

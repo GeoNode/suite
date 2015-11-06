@@ -5,14 +5,13 @@ Creating a contour map with a WPS process
 
 This tutorial will show you how to create a contour map from a raster data layer. It will outline two different methods:
 
-1) creation of a static vector contour layer
-2) creation of a dynamic contour style using :ref:`cartography.rt`. 
+#. Creation of a static vector contour layer with a WPS process.
 
-Both methods employ a WPS process.
+#. Creation of a dynamically generated contour style using :ref:`rendering transformations <cartography.rt>`. 
 
 .. figure:: img/style_complete.png
 
-   *A contour map*
+   A contour map
 
 .. toctree::
    :maxdepth: 2

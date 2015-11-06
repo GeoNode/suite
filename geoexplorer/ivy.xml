@@ -1,0 +1,35 @@
+<ivy-module version="2.0">
+    <info organisation="com.boundlessgeo.suite" module="geoexplorer"/>
+
+    <configurations>
+      <conf name="compile" visibility="public" />
+      <conf name="test" visibility="public" />
+    </configurations>
+
+    <dependencies>
+
+      <dependency org="org.ringojs" name="ringojs" rev="${ringojs.version}" 
+        conf="compile->*"/>
+      <dependency org="org.xerial" name="sqlite-jdbc" rev="3.6.16" 
+        conf="compile->*"/>
+
+      <dependency org="org.eclipse.jetty" name="jetty-http" rev="${jetty.version}" 
+        conf="compile->*"/>
+      <dependency org="org.eclipse.jetty" name="jetty-io" rev="${jetty.version}" 
+        conf="compile->*"/>
+      <dependency org="org.eclipse.jetty" name="jetty-security" rev="${jetty.version}" 
+        conf="compile->*"/>
+      <dependency org="org.eclipse.jetty" name="jetty-util" rev="${jetty.version}" 
+        conf="compile->*"/>
+      <dependency org="org.eclipse.jetty.orbit" name="javax.servlet" rev="2.5.0.v201103041518" 
+        conf="compile->*"/>
+      <dependency org="javax.servlet" name="servlet-api" rev="2.4"  conf="test->*"/>
+
+      <exclude artifact="junit"/>
+      <exclude artifact="jdbc-api"/>
+      <exclude org="org.mortbay.jetty"/>
+
+      <override org="org.eclipse.jetty" rev="${jetty.version}"/>
+
+    </dependencies>
+</ivy-module>

@@ -1,2 +1,4 @@
 # ignoring doc build artifacts
 build/
+basic/
+ee/

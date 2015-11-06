@@ -7,24 +7,25 @@ BufferFeatureCollection
 Description
 -----------
 
-The ``gs:BufferFeatureCollection`` process takes a feature collection and applies a buffer to each feature. The buffer distance can be a fixed value for all features, a variable value, with the values taken from an attribute in the feature collection, or it could be a combination of the two.
+The ``vec:BufferFeatureCollection`` process takes a feature collection and applies a buffer to each feature. The buffer distance can be a fixed value for all features, a variable value, with the values taken from an attribute in the feature collection, or it could be a combination of the two.
 
 The resulting feature collection will always contain polygons regardless of the input.
 
 .. figure:: img/bufferfc.png
 
-   *gs:BufferFeatureCollection*
+   *vec:BufferFeatureCollection*
 
 The attribute names and values of the output feature collection will match those of the input.
 
 Inputs and outputs
 ------------------
 
-``gs:BufferFeatureCollection`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
+``vec:BufferFeatureCollection`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
 
 Inputs
 ~~~~~~
 
+.. tabularcolumns:: |p{3cm}|p{5cm}|p{4cm}|p{3cm}|
 .. list-table::
    :header-rows: 1
 
@@ -79,37 +80,37 @@ As the input feature collection uses geographic coordinates (EPSG:4326), the dis
 Input parameters:
 
 * ``features``: ``medford:firestations``
-* ``distance``: 0.024 
+* ``distance``: 0.024
 * ``attributeName``: [blank]
 
 :download:`Download complete XML request <xml/bufferfcexample.xml>`
 
 .. figure:: img/bufferfcexampleUI.png
 
-   *gs:BufferFeatureCollection example parameters*
+   *vec:BufferFeatureCollection example parameters*
 
 The resulting feature collection looks like this:
 
 .. figure:: img/bufferfcexample.png
 
-   *gs:BufferFeatureCollection example output*
+   *vec:BufferFeatureCollection example output*
 
 .. todo:: It would be much better to work with a feature collection in another CRS...
 
 Related processes
 -----------------
 
-* Buffer calculation is also available with the :ref:`gs:Transform <processing.processes.vector.transform>` process, using the ``buffer(geom, dist)`` function.
-* The ``JTS:buffer`` process will perform buffer calculation for geometries.
-* The ``gs:PointBuffers`` process can be used to create multiple buffers around a single point.
+* Buffer calculation is also available with the :ref:`vec:Transform <processing.processes.vector.transform>` process, using the ``buffer(geom, dist)`` function.
+* The ``geo:buffer`` process will perform buffer calculation for geometries.
+* The ``vec:PointBuffers`` process can be used to create multiple buffers around a single point.
 
-.. - Polygons resulting from this process (if the buffer distance is positive) contain the area of the polygons being buffered. To get a polygon representing just the buffer area, without the area of the original polygon, use the ``gs:Overlay`` method to erase that inner area.
+.. - Polygons resulting from this process (if the buffer distance is positive) contain the area of the polygons being buffered. To get a polygon representing just the buffer area, without the area of the original polygon, use the ``vec:Overlay`` method to erase that inner area.
 
 .. image: bufferanderase.png
 
 .. todo:: this process is yet to be developed.
 
-.. - Polygons resulting from buffering near features might overlap. Use the ``gs:Dissolve`` process to merge overlapping polygons if needed
+.. - Polygons resulting from buffering near features might overlap. Use the ``vec:Dissolve`` process to merge overlapping polygons if needed
 
 .. todo:: this process is yet to be developed.
 

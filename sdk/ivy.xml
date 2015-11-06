@@ -1,0 +1,20 @@
+<ivy-module version="2.0">
+    <info organisation="com.boundlessgeo.suite" module="${ant.project.name}"/>
+
+    <dependencies>
+
+      <dependency org="org.ringojs" name="ringojs" rev="${ringojs.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-client" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-continuation" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-server" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-servlet" rev="${jetty.version}"/>
+      <dependency org="org.eclipse.jetty" name="jetty-xml" rev="${jetty.version}"/>
+
+      <exclude artifact="junit"/>
+      <exclude artifact="jdbc-api"/>
+      <exclude org="org.mortbay.jetty"/>
+
+      <override org="org.eclipse.jetty" rev="${jetty.version}"/>
+
+    </dependencies>
+</ivy-module>

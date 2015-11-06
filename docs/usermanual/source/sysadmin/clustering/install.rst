@@ -3,17 +3,19 @@
 Installing the clustering extension
 ===================================
 
-The clustering extension is not installed by default in :ref:`installations <installation>` of OpenGeo Suite. It must be installed separately and then later :ref:`enabled <sysadmin.clustering.setup>`.
+The clustering extension is not installed by default in :ref:`installations <intro.installation>` of OpenGeo Suite. It must be installed separately and then later :ref:`enabled <sysadmin.clustering.setup>`.
 
 .. note:: Prior to installation of the clustering extension, it is important to ensure that you have set up an external data directory, located in a shared location that all GeoServer instances will be able to access.
 
 Install
 -------
 
+.. note:: The Clustering extension is only available with `OpenGeo Suite Enterprise <http://boundlessgeo.com/solutions/opengeo-suite/>`_. For more information on OpenGeo Suite Enterprise, please `contact us <http://boundlessgeo.com/about/contact-us/sales/>`_.
+
 Windows
 ~~~~~~~
 
-The clustering extension is set to be installed on the :guilabel:`Components` page of the :ref:`installer wizard <installation.windows>`. Expand the :guilabel:`GeoServer Extensions` by clicking the plus, and then check the box next to :guilabel:`Clustering`.
+The clustering extension is set to be installed on the :guilabel:`Components` page of the :ref:`installer wizard <intro.installation.windows>`. Expand the :guilabel:`GeoServer Extensions` by clicking the plus, and then check the box next to :guilabel:`Clustering`.
 
 If OpenGeo Suite was installed without the clustering extension, first stop the OpenGeo Jetty service, then run the installer again, and at the :guilabel:`Components` page of the installer wizard, uncheck all other components aside from :guilabel:`Clustering`, and then continue with the install.
 
@@ -29,37 +31,27 @@ Linux
 
 The clustering extension is available in a collection of two separate packages::
 
-  geoserver-jdbc
+  geoserver-jdbcconfig
   geoserver-cluster
 
 To install the clustering extension, use the package manager.
 
-Red Hat / CentOS / Fedora::
+Red Hat / CentOS::
 
-  yum install geoserver-jdbc
+  yum install geoserver-jdbcconfig
   yum install geoserver-cluster
 
 Ubuntu::
 
-  apt-get install geoserver-jdbc
+  apt-get install geoserver-jdbcconfig
   apt-get install geoserver-cluster
 
 A restart of GeoServer is not required.
 
-Application Server
-~~~~~~~~~~~~~~~~~~
+Application Servers
+~~~~~~~~~~~~~~~~~~~
 
-The clustering extension must be downloaded and installed manually when running OpenGeo Suite for Application Servers.
-
-#. Stop the servlet container (or just the GeoServer webapp).
-
-#. Download this archive located at the following URL, replacing ``A.B.c`` with the version of OpenGeo Suite that you are running::
-
-     http://boundlessgeo.com/wp-content/opengeosuite/ext/OpenGeoSuite-A.B.c-extensions.zip
-
-#. Extract the archive. Copy the ``.jar`` files into ``<webapps>/geoserver/WEB-INF/lib``, where ``<webapps>`` is the location of the webapps served by the servlet container (such as Tomcat).
-
-#. Restart the servlet container (or just the GeoServer webapp).
+For installation when using OpenGeo Suite for Application Servers, please `contact us <http://boundlessgeo.com/about/contact-us/>`__.
 
 Verification
 ------------

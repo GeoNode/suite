@@ -1,74 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="geoexplorer" default="help" basedir=".">
 
-    <description>
-        GeoExplorer Build File
-    </description>
+  <import file="../build/common.xml"/>
 
-    <property name="war.src" location="target/${ant.project.name}-src"/>
-    <property name="app.proxy.geoserver" value=""/>
-    <property name="app.port" value="9080"/>
+  <property name="war.src" location="target/war"/>
 
-    <target name="help" description="print build target descriptions">
-        <exec executable="ant">
-            <arg value="-p"/>
-        </exec>
+  <target name="build" depends="init" 
+      description="Build project">
+
+    <mkdir dir="${war.src}"/>
+    <copy todir="${war.src}">
+      <fileset dir="src/main/webapp" includes="WEB-INF/**/*"/>
+    </copy>
+
+    <!-- resolve dependencies -->
+    <antcall target="mvn">
+	<param name="goals" value="install"/>
+    </antcall>
+    <antcall target="retrieve">
+
+      <param name="pattern" value="${war.src}/WEB-INF/lib/[artifact]-[revision].[ext]"/>
+      <param name="conf" value="compile"/>
+    </antcall>
+
+    <copy todir="${war.src}/WEB-INF/app">
+      <fileset dir="app">
+        <exclude name="**/externals/**"/>
+        <exclude name="**/script/**"/>
+      </fileset>
+    </copy>
+
+    <!-- copy stick -->
+    <copy todir="${war.src}/WEB-INF/app/stick">
+      <fileset dir="externals/stick">
+        <include name="**/lib/**"/>
+        <include name="package.json"/>
+      </fileset>
+    </copy>
+
+    <!-- copy Ext resources -->
+    <copy todir="${war.src}/WEB-INF/app/static/externals/ext">
+      <fileset dir="app/static/externals/ext">
+        <exclude name="**/*debug*.js"/>
+        <exclude name="**/ext-all-notheme.css"/>
+        <exclude name="**/xtheme-blue.css"/>
+      </fileset>
+    </copy>
+
+    <!-- copy OpenLayers resources -->
+    <copy todir="${war.src}/WEB-INF/app/static/externals/openlayers/theme">
+      <fileset dir="app/static/externals/openlayers/theme"/>
+    </copy>
+
+    <!-- copy GeoExt resources -->
+    <copy todir="${war.src}/WEB-INF/app/static/externals/geoext/resources">
+      <fileset dir="app/static/externals/geoext/resources">
+        <exclude name="**/geoext-all-debug.css"/>
+        <exclude name="**/gxtheme-slate.css"/>
+        <exclude name="**/slate/**"/>
+      </fileset>
+    </copy>
+
+    <!-- copy gxp resources -->
+    <copy todir="${war.src}/WEB-INF/app/static/externals/gxp/src/theme">
+      <fileset dir="app/static/externals/gxp/src/theme"/>
+    </copy>
+
+    <!-- copy PrintPreview resources -->
+    <copy todir="${war.src}/WEB-INF/app/static/externals/printpreview/resources">
+      <fileset dir="app/static/externals/printpreview/resources"/>
+    </copy>
+
+    <!-- build JavaScript -->
+    <mkdir dir="${war.src}/WEB-INF/app/static/script"/>
+
+    <!-- uncompressed -->
+    <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
+      <classpath>
+        <fileset dir="${war.src}/WEB-INF/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+      <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
+      <arg path="externals/buildkit/lib/buildkit/build.js"/>
+      <arg value="-u"/>
+      <arg value="-o"/>
+      <arg path="${war.src}/WEB-INF/app/static/script"/>
+      <arg path="buildjs.cfg"/>
+    </java>
+
+    <move
+      file="${war.src}/WEB-INF/app/static/script/GeoExplorer.js"
+      tofile="${war.src}/WEB-INF/app/static/script/GeoExplorer-debug.js"/>
+      <!-- compressed -->
+      <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
+        <classpath>
+          <fileset dir="${war.src}/WEB-INF/lib">
+            <include name="**/*.jar"/>
+          </fileset>
+        </classpath>
+        <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
+        <arg path="externals/buildkit/lib/buildkit/build.js"/>
+        <arg value="-o"/>
+        <arg path="${war.src}/WEB-INF/app/static/script"/>
+        <arg path="buildjs.cfg"/>
+      </java>
+
+      <jar destfile="target/geoexplorer.war" basedir="${war.src}"/>
+  </target>
+
+  <target name="clean" depends="destroy"
+    description="Clean project">
+  </target>
+
+  <target name="assemble" description="Assemble project artifact">
+    <antcall target="assemble-artifact">
+        <param name="dir" value="target"/>
+        <param name="includes" value="geoexplorer.war"/>
+      </antcall>
+  </target>
+
+  <target name="publish" description="Publish project artifact"
+    depends="publish-artifact"/>
+
+  <property name="app.proxy.geoserver" value=""/>
+  <property name="app.port" value="9080"/>
+
+  <!-- start of debug tasks -->
+  <target name="installed" description="Confirms app is installed">
+    <condition property="war.src.exists">
+      <available file="${war.src}" type="dir"/>
+    </condition>
+    <fail message="App not yet built.  Run `ant build` first." 
+      unless="war.src.exists"/>
     </target>
 
-    <target name="installed" description="confirms app is installed">
-        <condition property="war.src.exists">
-            <available file="${war.src}" type="dir"/>
-        </condition>
-        <fail message="App not yet built.  Run `mvn clean install` first." 
-                unless="war.src.exists"/>
+    <target name="debug" depends="installed" description="Runs app in debug mode">
+      <antcall target="retrieve">
+        <param name="pattern" value="${war.src}/WEB-INF/lib/[artifact]-[revision].[ext]"/>
+        <param name="conf" value="test"/>
+      </antcall>
+      <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
+        <classpath>
+          <fileset dir="${war.src}/WEB-INF/lib">
+            <include name="**/*.jar"/>
+          </fileset>
+        </classpath>
+        <sysproperty key="GEOEXPLORER_DATA" path="target"/>
+        <sysproperty key="app.debug" value="1"/>
+        <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
+        <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
+        <sysproperty key="ringo.modulepath" path="externals"/>
+        <arg path="app/main.js"/>
+        <arg line="-p ${app.port}"/>
+      </java>
     </target>
 
-    <target name="debug" depends="installed" description="runs app in debug mode">
-        <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
-            <classpath>
-                <fileset dir="${war.src}/WEB-INF/lib">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-            <sysproperty key="GEOEXPLORER_DATA" path="target"/>
-            <sysproperty key="app.debug" value="1"/>
-            <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
-            <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
-            <sysproperty key="ringo.modulepath" path="externals"/>
-            <arg path="app/main.js"/>
-            <arg line="-p ${app.port}"/>
-        </java>
+    <target name="debugall" depends="installed" description="Runs app and server in debug mode">
+      <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
+        <classpath>
+          <fileset dir="${war.src}/WEB-INF/lib">
+            <include name="**/*.jar"/>
+          </fileset>
+        </classpath>
+        <sysproperty key="GEOEXPLORER_DATA" path="target"/>
+        <sysproperty key="app.debug" value="1"/>
+        <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
+        <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
+        <sysproperty key="ringo.modulepath" path="externals"/>
+        <arg value="-d"/>
+        <arg path="app/main.js"/>
+        <arg line="-p ${app.port}"/>
+      </java>
     </target>
 
-    <target name="debugall" depends="installed" description="runs app and server in debug mode">
-        <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
-            <classpath>
-                <fileset dir="${war.src}/WEB-INF/lib">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-            <sysproperty key="GEOEXPLORER_DATA" path="target"/>
-            <sysproperty key="app.debug" value="1"/>
-            <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
-            <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
-            <sysproperty key="ringo.modulepath" path="externals"/>
-            <arg value="-d"/>
-            <arg path="app/main.js"/>
-            <arg line="-p ${app.port}"/>
-        </java>
-    </target>
-
-    <target name="test" unless="skipTests" depends="installed" description="run tests">
-         <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
-            <classpath>
-                <fileset dir="${war.src}/WEB-INF/lib">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-            <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
-            <sysproperty key="ringo.modulepath" path="externals"/>
-            <arg path="tests/all.js"/>
-        </java>
-    </target>
+    <target name="test" unless="skipTests" depends="installed" description="Run tests">
+     <java classname="org.ringojs.tools.launcher.Main" failonerror="true" fork="true">
+      <classpath>
+        <fileset dir="${war.src}/WEB-INF/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+      <sysproperty key="ringo.home" path="${war.src}/WEB-INF"/>
+      <sysproperty key="ringo.modulepath" path="externals"/>
+      <arg path="tests/all.js"/>
+    </java>
+  </target>
 
 </project>

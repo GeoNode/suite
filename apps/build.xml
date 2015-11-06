@@ -1,0 +1,26 @@
+<project name="apps" default="build">
+    <import file="../build/common.xml"/>
+
+    <property name="war.file" value="apps.war"/>
+    <property name="war.path" value="target/${war.file}"/>
+
+    <target name="build" depends="init" description="Builds project">
+        <delete file="${war.path}"/>
+        <jar destfile="${war.path}">
+            <fileset dir="${basedir}">
+                <exclude name="target"/>
+                <exclude name="build.xml"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="clean" depends="destroy" description="Destroys project"/>
+
+    <target name="assemble" description="Assembles project artifact">
+        <antcall target="assemble-artifact">
+            <param name="includes" value="${war.file}"/>
+        </antcall>
+    </target>
+
+    <target name="publish" depends="publish-artifact"/>
+</project>

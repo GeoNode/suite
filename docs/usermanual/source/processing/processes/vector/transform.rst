@@ -6,22 +6,23 @@ Transform
 Description
 -----------
 
-The ``gs:Transform`` process operates on a feature collection using a series of expressions. This process is equivalent to the ``SELECT ... FROM`` clause in SQL, allowing you to define a new feature collection with attributes computed from some, or all, of the input feature collection. The new attributes are computed via `ECQL expressions <../../../geoserver/filter/ecql_reference.html>`_  which can process geometry as well as scalar data.
+The ``vec:Transform`` process operates on a feature collection using a series of expressions. This process is equivalent to the ``SELECT ... FROM`` clause in SQL, allowing you to define a new feature collection with attributes computed from some, or all, of the input feature collection. The new attributes are computed via `ECQL expressions <../../../geoserver/filter/ecql_reference.html>`_  which can process geometry as well as scalar data.
 
 The ``transform`` string is a sequence of specifiers in the form ``name=expression``. The ``name`` attribute is the name of an attribute used in the output feature collection, and ``expression`` is an ECQL expression using the input attributes and constants.
 
 .. figure:: img/transform.png
 
-   *gs:Transform*
+   *vec:Transform*
 
 Inputs and outputs
 ------------------
 
-``gs:Transform`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
+``vec:Transform`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
 
 Inputs
 ~~~~~~
 
+.. tabularcolumns:: |p{3cm}|p{5.5cm}|p{4cm}|p{2.5cm}|
 .. list-table::
    :header-rows: 1
 
@@ -61,7 +62,7 @@ Usage notes
 Examples
 --------
 
-The following examples illustrate how to use the ``gs:Transform`` process. All of the examples use the ``medford:bikelanes`` feature collection, with different expressions for the ``transform`` parameter.
+The following examples illustrate how to use the ``vec:Transform`` process. All of the examples use the ``medford:bikelanes`` feature collection, with different expressions for the ``transform`` parameter.
 
 #. A new feature collection with a single attribute containing the name of the street each bike lane is on:
 
@@ -91,5 +92,5 @@ The following examples illustrate how to use the ``gs:Transform`` process. All o
 Related processes
 -----------------
 
-Due to its flexibility, the ``gs:Transform`` process can compute results that can also be obtained by other processes, such as :ref:`gs:BufferFeatureCollection <processing.processes.vector.bufferfc>` (using the ``buffer()`` function).
+Due to its flexibility, the ``vec:Transform`` process can compute results that can also be obtained by other processes, such as :ref:`vec:BufferFeatureCollection <processing.processes.vector.bufferfc>` (using the ``buffer()`` function).
 

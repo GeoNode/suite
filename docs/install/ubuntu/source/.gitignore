@@ -1,4 +1,3 @@
-# generated files
-details.rst
-index.rst
-suite.rst
+*.rst
+include
+img

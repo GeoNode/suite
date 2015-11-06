@@ -1,0 +1,41 @@
+name: Default Styler
+title: Barnes Surface
+abstract: A style that produces a Barnes surface using a rendering transformation
+feature-styles:
+- name: name
+  transform:
+    name: vec:BarnesSurface
+    params:
+      valueAttr: value
+      scale: 15.0
+      convergence: 0.2
+      passes: 3
+      minObservations: 1
+      maxObservationDistance: 10
+      pixelsPerCell: 10
+      queryBuffer: 40
+  rules:
+  - symbolizers:
+    - raster:
+        opacity: 0.8
+        color-map:
+          type: ramp
+          entries:
+          - ['#FFFFFF',0,-990,nodata]
+          - ['#2E4AC9',1,-9,nodata]
+          - ['#41A0FC',1,-6,values]
+          - ['#58CCFB',1,-3,values]
+          - ['#76F9FC',1,0,values]
+          - ['#6AC597',1,3,values]
+          - ['#479364',1,6,values]
+          - ['#2E6000',1,9,values]
+          - ['#579102',1,12,values]
+          - ['#9AF20C',1,15,values]
+          - ['#B7F318',1,18,values]
+          - ['#DBF525',1,21,values]
+          - ['#FAF833',1,24,values]
+          - ['#F9C933',1,27,values]
+          - ['#F19C33',1,30,values]
+          - ['#ED7233',1,33,values]
+          - ['#EA3F33',1,36,values]
+          - ['#BB3026',1,999,values]

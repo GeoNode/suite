@@ -1,0 +1,122 @@
+<project name="docs" default="build">
+
+    <import file="../build/common.xml"/>
+
+    <property name="docs.modules" value="usermanual,install,geoexplorer,geowebcache,geoserver,sdk-api,postgis,openlayers,qgis"/>
+
+    <target name="clean" depends="destroy-target"
+        description="Clean project">
+        <foreach list="${docs.modules}" target="clean-mod" param="mod"/>
+    </target>
+
+    <target name="build"
+        description="Build all documentation modules">
+        <foreach list="${docs.modules}" target="build-mod" param="mod"/>
+    </target>
+
+    <target name="clean-mod">
+        <ant dir="${mod}" target="clean"/>
+    </target>
+    <target name="build-mod">
+        <ant dir="${mod}"/>
+    </target>
+    
+    <target name="assemble" depends="init"
+        description="Assmble documentation artifact">
+        <property name="doc.dir" value="target/opengeo-docs"/>
+        <delete dir="${doc.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+        <copy todir="${doc.dir}">
+            <fileset dir="usermanual/target/html/" 
+                includes="**/*"/>
+            <fileset dir="target" includes="version.ini"/>
+        </copy>
+        <mkdir dir="${doc.dir}"/>
+        <copy todir="${doc.dir}/_static">
+            <fileset dir="qgis/target/html/_static"
+                includes="**/*"/>
+        </copy>
+
+        <for list="${docs.modules}" param="mod">
+            <sequential>
+                <if>
+                    <and>
+                        <not>
+                            <equals arg1="@{mod}" arg2="install"/>
+                        </not>
+                        <not>
+                            <equals arg1="@{mod}" arg2="usermanual"/>
+                        </not>
+                    </and>
+                    <then>
+                        <copy todir="${doc.dir}/@{mod}">
+                            <fileset dir="@{mod}/target/html" includes="**/*"/>
+                        </copy>
+                    </then>
+                </if>
+            </sequential>
+        </for>
+
+        <antcall target="assemble-artifact">
+            <param name="dir" value="target"/>
+            <param name="includes" value="opengeo-docs/**/*"/>
+        </antcall>
+
+        <delete file="target/opengeo-docs.war"/>
+        <jar destfile="target/opengeo-docs.war" basedir="${doc.dir}"/>
+
+        <antcall target="assemble-artifact">
+            <param name="name" value="opengeo-docs-war"/>
+            <param name="dir" value="target"/>
+            <param name="includes" value="opengeo-docs.war"/>
+        </antcall>
+        <if>
+            <available file="README-mac.pdf" filepath="install/mac/target/latex/"/>
+            <then>
+                <antcall target="assemble-artifact">
+                    <param name="name" value="osx-readme"/>
+                    <param name="dir" value="install/mac/target/latex/"/>
+                    <param name="includes" value="README*.pdf"/>
+                </antcall>
+            </then>
+        </if>
+        <if>
+            <available file="README-windows.pdf" filepath="install/windows/target/latex/"/>
+            <then>
+
+                <antcall target="assemble-artifact">
+                    <param name="name" value="win-readme"/>
+                    <param name="dir" value="install/windows/target/latex/"/>
+                    <param name="includes" value="README*.pdf"/>
+                </antcall>
+            </then>
+        </if>
+    </target>
+
+    <target name="publish" depends="init">
+        <antcall target="publish-artifact"/>
+        <antcall target="publish-artifact">
+          <param name="name" value="opengeo-docs-war"/>
+          <param name="path" value="docs"/>
+        </antcall>
+        <if>
+          <available file="suite-osx-readme-${suite.build_rev}.zip" filepath="target"/>
+            <then>
+              <antcall target="publish-artifact">
+                  <param name="name" value="osx-readme"/>
+                  <param name="path" value="docs"/>
+              </antcall>
+            </then>
+        </if>
+        <if>
+          <available file="suite-win-readme-${suite.build_rev}.zip" filepath="target"/>
+            <then>
+              <antcall target="publish-artifact">
+                  <param name="name" value="win-readme"/>
+                  <param name="path" value="docs"/>
+              </antcall>
+          </then>
+        </if>
+    </target>
+
+</project>

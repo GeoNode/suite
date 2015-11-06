@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="install" default="build" basedir=".">
+
+  <import file="../common.xml"/>
+
+  <target name="clean" depends="destroy"
+    description="Clean project">
+    <delete includeEmptyDirs="true">
+      <fileset dir="source" includes="**/*.rst"/>
+    </delete>
+  </target>
+
+  <target name="init-sources">
+    <copy todir="${basedir}/source">
+      <fileset dir="${basedir}/../../usermanual/source/intro/installation/${doc.name}"/>
+    </copy>
+  </target>
+
+  <target name="build" depends="init,init-sources"
+    description="Build project">
+    <antcall target="build-html"/>
+    <antcall target="build-text"/>
+  </target>
+
+  <target name="assemble">
+    <antcall target="assemble-artifact">
+      <param name="name" value="readme-${doc.name}"/>
+      <param name="dir" value="target/text"/>
+      <param name="includes" value="*.txt"/>
+    </antcall>
+  </target>
+
+  <target name="publish" />
+
+</project>

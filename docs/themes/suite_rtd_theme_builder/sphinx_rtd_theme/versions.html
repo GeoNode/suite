@@ -1,0 +1,31 @@
+{% if theme_display_version %}
+{# Add rst-badge after rst-versions for small badge style. #}
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> &nbsp; Component Manuals</span>
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt></dt>
+        <dd>
+          <ul class="simple">
+            <li> <a class="abs-link" href="{{ theme_documentation_root }}/geoserver/index.html">GeoServer</a> <span class="component-desc">Spatial Server</span></li>
+            <li> <a class="abs-link" href="{{ theme_documentation_root }}/geowebcache/index.html">GeoWebCache</a> <span class="component-desc">Map Tile Cache</span></li>
+            <li> <a class="abs-link" href="{{ theme_documentation_root }}/postgis/index.html">PostGIS</a> <span class="component-desc">Spatial Database</span></li>
+            <li> <a class="abs-link" href="{{ theme_documentation_root }}/qgis/index.html">QGIS</a> <span class="component-desc">Desktop GIS</span></li>
+            <hr width="200px" />
+            <li> <a class="abs-link" href="{{ theme_documentation_root }}/sdk-api/index.html">Boundless SDK</a> <span class="component-desc">Web Client API</span></li>
+            <li> <a class="abs-link" href="{{ theme_documentation_root }}/openlayers/index.html">OpenLayers</a> <span class="component-desc">Web Mapping Library</span></li>
+             <li> <a class="abs-link" href="{{ theme_documentation_root }}/geoexplorer/index.html">GeoExplorer</a> <span class="component-desc">Web Map Viewer</span></li>
+          </ul>
+        </dd>
+    </dl>
+    <hr/>
+    <span class="versions-footer">Back to <a href="{{ theme_documentation_root }}">Suite User Manual</a>
+    <hr/>
+    <span class="versions-footer" style="color: #444; float: right;margin: -4px 0 4px;"><small>Based on <a href="http://github.com/snide/sphinx_rtd_theme" style="color: #555;"><small>RTD theme</small></a></small>.
+
+  </div>
+</div>
+{% endif %}

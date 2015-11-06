@@ -1,0 +1,18 @@
+{
+  "type":"FeatureCollection",
+  "totalFeatures":1,
+  "features":[{
+    "type":"Feature",
+    "id":"point.1",
+    "geometry":{
+      "type":"Point",
+      "coordinates":[0,0]
+    },
+    "geometry_name":"the_geom",
+    "properties":{"name":"zero"}
+  }],
+  "crs":{
+    "type":"name",
+    "properties":{"name":"urn:ogc:def:crs:EPSG::4326"}
+  }
+}

@@ -1,0 +1,62 @@
+<project name="docs.common" default="build">
+
+  <import file="../build/common.xml"/>
+  
+  <target name="check-pdf">
+    <property environment="env"/>
+    <condition property="pdflatex.isPresent">
+      <or>
+        <available file="pdflatex" filepath="${env.PATH}"/>
+        <available file="pdflatex.exe" filepath="${env.Path}"/>
+        <available file="pdflatex.exe" filepath="${env.PATH}"/>
+      </or>
+    </condition>
+  </target>
+
+ <!-- 
+  Runs a sphinx build html
+
+  @param flags Additional sphinx build flags (defaults to -t=basic)
+  -->
+  <target name="build-html"
+    description="Build html docs">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+      <param name="flags" value="-q"/>
+    </antcall>
+  </target>
+
+  <target name="build-text"
+    description="Build text docs">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+      <param name="builder" value="text"/>
+      <param name="flags" value="-q"/>
+    </antcall>
+  </target>
+
+  <target name="build-pdf" depends="check-pdf"
+    description="Build pdf docs">
+    <if>
+        <equals arg1="${pdflatex.isPresent}" arg2="true"/>
+        <then>
+          <sequential>
+            <antcall target="sphinx">
+              <param name="dir" value="source"/>
+              <param name="builder" value="latex"/>
+              <param name="flags" value="-q"/>
+            </antcall>
+            <exec executable="make" failonerror="true" dir="target/latex">
+              <arg line="all-pdf"/>
+            </exec>
+          </sequential>
+        </then>
+        <else>
+            <echo message="No PDF generated because pdflatex is not on PATH.  This may make installer assembly fail."/>
+        </else>
+    </if>
+  </target>
+
+  <target name="assemble"/>
+  <target name="publish"/>
+</project>

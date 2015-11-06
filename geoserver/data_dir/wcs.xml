@@ -4,7 +4,7 @@
   <name>WCS</name>
   <title>Web Coverage Service</title>
   <maintainer>http://boundlessgeo.com/about/contact-us/customer-support/</maintainer>
-  <abstrct>This server implements the WCS specification 1.0 and 1.1.1, it&apos;s reference implementation of WCS 1.1.1. All layers published by this service are available on WMS also.
+  <abstrct>Web Coverage Service for raster data implementing WCS 1.0.0, WCS 1.1.0, WCS 1.1.1, WCS 2.0. All layers published by this service are available via WMS.
      </abstrct>
   <accessConstraints>NONE</accessConstraints>
   <fees>NONE</fees>

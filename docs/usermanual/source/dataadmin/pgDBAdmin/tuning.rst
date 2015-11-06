@@ -10,10 +10,10 @@ postgresql.conf
 
 The database configuration parameters are available to edit (using a text editor) in the :file:`postgresql.conf` file. The location of this file differs based on platform.
 
-* :ref:`Windows <installation.windows.misc.pgconfig>`
-* :ref:`Mac <installation.mac.misc.pgconfig>`
-* :ref:`Ubuntu <installation.redhat.misc.pgconfig>`
-* :ref:`Fedora/CentOS/Red Hat <installation.ubuntu.misc.pgconfig>`
+* :ref:`Windows <intro.installation.windows.postinstall.pgconfig>`
+* :ref:`Mac <intro.installation.mac.postinstall.pgconfig>`
+* :ref:`Ubuntu <intro.installation.ubuntu.postinstall.pgconfig>`
+* :ref:`CentOS/Red Hat <intro.installation.redhat.postinstall.pgconfig>`
 
 An easy way to edit this configuration file is to use the pgAdmin :guilabel:`Backend Configuration Editor`. On the pgAdmin main menu, click :guilabel:`File` and click :guilabel:`Open postgresql.conf`. In the :guilabel:`Open configuration file` dialog box navigate to the data directory folder and select the configuration file to open it in the :guilabel:`Backend Configuration Editor`.
 

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="webapp-sdk" default="help" basedir=".">
+
+  <import file="../build/common.xml"/>
+
+  <property name="sdk.dir" location="target/sdk"/>
+  <property name="geoexplorer.dir" location="../geoexplorer"/>
+  <property name="gxp.dir" location="${geoexplorer.dir}/app/static/externals/gxp"/>
+
+  <target name="build" depends="init" 
+    description="Build project">
+
+    <!-- resolve dependencies -->
+    <antcall target="retrieve">
+      <param name="dir" value="${sdk.dir}/lib"/>
+    </antcall>
+
+    <copy todir="${sdk.dir}/src/main">
+      <fileset dir="src/main">
+        <exclude name="assembly/"/>
+        <exclude name="resources/*.txt"/>
+        <exclude name="resources/bin"/>
+        <exclude name="resources/build.xml"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${sdk.dir}">
+      <fileset dir="src/main/resources">
+        <include name="bin/"/>
+        <include name="build.xml"/>
+        <include name="*.txt"/>
+      </fileset>
+    </copy>
+
+    <chmod perm="755">
+      <fileset dir="${sdk.dir}/bin"/>
+    </chmod>
+
+    <copy todir="${sdk.dir}/src/main/resources/client/gxp/src/gxp/script">
+      <fileset dir="${gxp.dir}/src/script"/>
+    </copy>
+
+    <mkdir dir="${sdk.dir}/src/main/resources/client/gxp/src/gxp/theme"/>
+    <copy todir="${sdk.dir}/src/main/resources/client/gxp/src/gxp/theme">
+      <fileset dir="${gxp.dir}/src/theme"/>
+    </copy>
+
+    <copy todir="${sdk.dir}/src/main/resources/client/gxp/src/openlayers">
+      <fileset dir="${geoexplorer.dir}/app/static/externals/openlayers">
+        <exclude name="**/.git/**"/>
+        <exclude name="apidoc_config/"/>
+        <exclude name="art/"/>
+        <exclude name="build/"/>
+        <exclude name="doc_config/"/>
+        <exclude name="examples/"/>
+        <exclude name="notes/"/>
+        <exclude name="tests/"/>
+        <exclude name="tools/"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${sdk.dir}/src/main/resources/client/gxp/src/geoext">
+      <fileset dir="${geoexplorer.dir}/app/static/externals/geoext">
+        <exclude name="**/.git/**"/>
+        <exclude name="build/"/>
+        <exclude name="examples/"/>
+        <exclude name="tests/"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${sdk.dir}/src/main/resources/client/gxp/src/ext">
+      <fileset dir="${geoexplorer.dir}/app/static/externals/ext"/>
+    </copy>
+
+    <copy todir="${sdk.dir}/src/main/resources/client/ol3view/src">
+      <fileset dir="src/main/resources/client/ol3-common"/>
+    </copy>
+
+    <copy todir="${sdk.dir}/src/main/resources/client/ol3edit/src">
+      <fileset dir="src/main/resources/client/ol3-common"/>
+    </copy>
+
+    <copy todir="${sdk.dir}" file="src/main/resources/build.xml"/>
+
+    <mkdir dir="${sdk.dir}/lib"/>
+
+    <copy todir="${sdk.dir}/lib/buildkit">
+      <fileset dir="${geoexplorer.dir}/externals/buildkit" excludes="**/.git/**"/>
+
+    </copy>
+
+    <copy todir="${sdk.dir}/lib/stick">
+      <fileset dir="${geoexplorer.dir}/externals/stick" excludes="**/.git/**"/>
+    </copy>
+  </target>
+
+  <target name="clean" depends="destroy"
+    description="Clean project">
+  </target>
+
+  <target name="assemble" description="Assemble project artifact"
+      depends="init-target,init-git">
+    <!-- JD: can't call assemble-artifact because we need to do some
+      custom magic to preserve file permissions -->
+    <property name="sdk_zip"
+          value="target/suite-webapp-sdk-${suite.build_rev}.zip"/>
+    <delete file="${sdk_zip}"/>
+    <zip destfile="${sdk_zip}">
+        <fileset dir="target" includes="version.ini"/>
+        <zipfileset prefix="bin" dir="${sdk.dir}/bin" includes="suite-sdk"
+          filemode="755"/>
+        <fileset dir="${sdk.dir}" includes="**/*" excludes="bin/suite-sdk"/>
+    </zip>
+  </target>
+
+  <target name="publish" description="Publish project artifact"
+    depends="publish-artifact"/>
+
+</project>

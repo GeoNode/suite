@@ -11,13 +11,15 @@ To get a copy of the application source code, use [Git](http://git-scm.com/):
 ## Dependencies
 
 The GeoExplorer source directory contains what you need to run the application as a servlet with an integrated persistence layer.
+You will need:
 
-To build the application, you need [Maven 2](http://maven.apache.org/) installed.  To run the application in development mode, you need [Ant](http://ant.apache.org/).
+* [Apache Ant](http://ant.apache.org/bindownload.cgi) - 1.8+
+* [Apache Ivy](http://ant.apache.org/ivy/download.cgi) - 2.3+
 
-Before running in development mode or preparing the application for deployment, you need to install dependencies.  Do this by running `mvn install` in the geoexplorer directory:
+Before running in development mode or preparing the application for deployment, you need to install dependencies.  Do this by running `ant build` in the geoexplorer directory:
 
     you@prompt:~$ cd geoexplorer/
-    you@prompt:~/geoexplorer$ mvn install
+    you@prompt:~/geoexplorer$ ant build
 
 
 ## Running in development mode
@@ -42,7 +44,7 @@ In addition, if you want to make a remote GeoServer available at the `/geoserver
 
 ## Preparing the application for deployment
 
-Running GeoExplorer as described above is not suitable for production because JavaScript files will be loaded dynamically.  Before moving your application to a production environment, run `mvn install` and find the resulting `geoexplorer.war` in the `target` directory.  Move the `target/geoexplorer.war` file to your production environment (e.g. a  servlet container).
+Running GeoExplorer as described above is not suitable for production because JavaScript files will be loaded dynamically.  Before moving your application to a production environment, run `ant build` and find the resulting `geoexplorer.war` in the `target` directory.  Move the `target/geoexplorer.war` file to your production environment (e.g. a  servlet container).
 
 GeoExplorer writes to a geoexplorer.db when saving maps.  The location of this file is determined by the `GEOEXPLORER_DATA` value at runtime.  This value can be set as a servlet initialization parameter or a Java system property.
 

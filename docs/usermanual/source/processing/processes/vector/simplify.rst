@@ -6,7 +6,7 @@ Simplify
 Description
 -----------
 
-The ``gs:Simplify`` process takes a feature collection and reduces the number of vertices in each feature, simplifying the geometries.
+The ``vec:Simplify`` process takes a feature collection and reduces the number of vertices in each feature, simplifying the geometries.
 
 The adopted simplification method is the `Douglas-Peucker algorithm <http://en.wikipedia.org/wiki/Douglas-Peucker_algorithm>`_. This algorithm uses a distance value as input to determine how the geometries are to be simplified. For a given distance, all vertices in the output simplified geometry will be within this distance of the original geometry. The higher the distance value, the greater the simplification.
 
@@ -14,16 +14,17 @@ The output feature collection may optionally be set to preserve the topology of 
 
 .. figure:: img/simplify.png
 
-   *gs:Simplify*
+   *vec:Simplify*
 
 Inputs and outputs
 ------------------
 
-``gs:Simplify`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
+``vec:Simplify`` accepts :ref:`processing.processes.formats.fcin` and returns :ref:`processing.processes.formats.fcout`.
 
 Inputs
 ~~~~~~
 
+.. tabularcolumns:: |p{3.5cm}|p{5cm}|p{4cm}|p{2.5cm}|
 .. list-table::
    :header-rows: 1
 
@@ -91,15 +92,15 @@ Input parameters:
 
 .. figure:: img/simplifyexampleUI.png
 
-   *gs:Simplify example parameters*
+   *vec:Simplify example parameters*
 
-The process is then repeated using a ``distance`` value of 0.005. 
+The process is then repeated using a ``distance`` value of 0.005.
 
 The following illustration shows the different outputs. The original features are represented by the black lines, the first process output with a ``distance`` value of 0.002 is represented by the red lines, and the second process output with a ``distance`` value of 0.005 is represented by the blue lines.
 
 .. figure:: img/simplifyexample.png
 
-   *gs:Simplify example output*
+   *vec:Simplify example output*
 
 
 .. The following example show the differences between using the default simplifying algorithm, with no topology preserving, and the alternative one that ensures that topology is preserved.

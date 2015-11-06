@@ -85,7 +85,7 @@ var WPSDemo = Ext.extend(gxp.plugins.Tool, {
             if (poly !== line && poly.geometry.intersects(line.geometry)) {
                 this.wpsClient.execute({
                     server: 'local',
-                    process: 'JTS:splitPolygon',
+                    process: 'geo:splitPolygon',
                     inputs: { polygon: poly, line: line },
                     success: this.addResult,
                     scope: this
@@ -105,14 +105,14 @@ var WPSDemo = Ext.extend(gxp.plugins.Tool, {
             if (poly !== line && poly.geometry.intersects(line.geometry)) {
                 this.wpsClient.execute({
                     server: 'local',
-                    process: 'JTS:buffer',
+                    process: 'geo:buffer',
                     inputs: {
                         distance:
                             // buffer distance is 10 pixels
                             10 * this.target.mapPanel.map.getResolution(),
                         geom:
                             this.wpsClient.getProcess(
-                                'local', 'JTS:intersection'
+                                'local', 'geo:intersection'
                             ).configure({
                                 inputs: { a: line, b: poly }
                             }).output()

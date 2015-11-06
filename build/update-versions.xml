@@ -1,0 +1,25 @@
+<project name="update-versions" default="update">
+ 
+  <property name="rootdir" value="${ant.file.update-verisons}/../../"/>
+
+  <target name="check-args">
+    <fail message="from version not specified" unless="from"/>
+    <fail message="to version not specified" unless="to"/>
+  </target>
+
+  <target name="update" depends="check-args">
+    <replace token="${from}" value="${to}">
+      <fileset dir="${rootdir}"> 
+        <include name="**/pom.xml"/>
+        <exclude name="**/externals/**/*"/>
+        <exclude name="**/target/**/*"/>
+      </fileset>
+      <fileset dir="${rootdir}">
+        <include name="**/*.properties"/>
+        <exclude name="**/externals/**/*"/>
+        <exclude name="**/target/**/*"/>
+      </fileset>
+    </replace>
+  </target>
+
+</project>

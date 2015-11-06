@@ -1,0 +1,66 @@
+<project name="dashboard" default="build">
+
+    <import file="../build/common.xml"/>
+
+    <property name="war.src" value="src/main/webapp"/>
+
+    <target name="build-war" depends="init"  description="Build project">
+        <property name="war.dir" value="target/${suite.build_profile}/war"/>
+        <mkdir dir="${war.dir}"/>
+        <copy todir="${war.dir}">
+          <fileset dir="${war.src}">
+            <include name="**/*.html"/>
+            <include name="**/*.js"/>
+          </fileset>
+          <filterset>
+            <filtersfile file="target/version.ini"/>
+          </filterset>
+        </copy>
+        <copy todir="${war.dir}">
+          <fileset dir="${war.src}">
+            <exclude name="**/*.html"/>
+            <exclude name="**/*.js"/>
+          </fileset>
+        </copy>
+        <copy todir="${war.dir}" file="target/version.ini"/>
+        <jar destfile="target/${suite.build_profile}/${ant.project.name}.war"
+          basedir="${war.dir}"/>
+    </target>
+    
+    <target name="build">
+      <antcall target="build-war">
+        <param name="suite.build_profile" value="ee"/>
+      </antcall>
+      <antcall target="build-war">
+        <param name="suite.build_profile" value="basic"/>
+      </antcall>
+    </target>
+
+    <target name="clean" depends="destroy"  description="Clean project"/>
+
+    <target name="assemble-zip"  description="Assemble project artifact">
+      <antcall target="assemble-artifact">
+        <param name="dir" value="target/${suite.build_profile}"/>
+        <param name="includes" value="dashboard.war"/>
+      </antcall>
+    </target>
+    
+    <target name="assemble">
+      <antcall target="assemble-zip">
+        <param name="suite.build_profile" value="ee"/>
+      </antcall>
+      <antcall target="assemble-zip">
+        <param name="suite.build_profile" value="basic"/>
+      </antcall>
+    </target>
+
+    <target name="publish" depends="init">
+      <antcall target="publish-artifact">
+        <param name="suite.build_profile" value="basic"/>
+      </antcall>
+      <antcall target="publish-artifact">
+        <param name="suite.build_profile" value="ee"/>
+      </antcall>
+    </target>
+
+</project>

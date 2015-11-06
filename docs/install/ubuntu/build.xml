@@ -1,0 +1,6 @@
+<project name="doc.install.ubuntu" default="build">
+
+  <property name="doc.name" value="ubuntu"/>
+  <import file="../common.xml"/>
+
+</project>

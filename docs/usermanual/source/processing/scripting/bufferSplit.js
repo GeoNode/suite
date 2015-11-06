@@ -1,7 +1,7 @@
 var Process = require("geoscript/process").Process;
 
-var buffer = Process.get("JTS:buffer");
-var split = Process.get("JTS:splitPolygon");
+var buffer = Process.get("geo:buffer");
+var split = Process.get("geo:splitPolygon");
 
 exports.process = new Process({
   title: "Buffer and Split",

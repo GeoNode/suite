@@ -49,6 +49,14 @@
       <outputDirectory>webapps/opengeo-docs/sdk-api</outputDirectory>
     </fileSet>
     <fileSet>
+      <directory>docs/openlayers/target/html</directory>
+      <outputDirectory>webapps/opengeo-docs/openlayers</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>docs/qgis/target/html</directory>
+      <outputDirectory>webapps/opengeo-docs/qgis</outputDirectory>
+    </fileSet>
+    <fileSet>
       <directory>recipes</directory>
       <outputDirectory>webapps/recipes</outputDirectory>
       <excludes>

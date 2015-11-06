@@ -5,7 +5,7 @@ Edit your data
 
 In addition to :ref:`graphical styling <webmaps.basic.style>`, GeoExplorer also allows for editing of geospatial data when the layer is served through a local copy of GeoServer. Since this is how our data was loaded, we will use GeoExplorer to edit features.
 
-.. note:: Editing data served directly from shapefiles is not recommended, but our shapefiles were converted to PostGIS tables during the :ref:`loading <webmaps.basic.load>` process.
+.. note:: Editing data served directly from shapefiles is not recommended. We recommend that you load your data into a spatial database such as PostGIS before editing.
 
 If you don't wish to edit any of your data, you can continue on to :ref:`webmaps.basic.publish`.
 
